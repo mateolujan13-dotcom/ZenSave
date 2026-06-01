@@ -1,0 +1,2 @@
+zephyr.proxy.rlwy.net:38437
+/var/lib/mysql

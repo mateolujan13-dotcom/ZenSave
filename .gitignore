@@ -1,0 +1,37 @@
+# ════════════════════════════════════
+# ZEN SAVE — .gitignore
+# ════════════════════════════════════
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Dependencias (legacy Node.js)
+node_modules/
+
+# Variables de entorno (contiene secrets)
+.env
+backend/.env
+
+# Base de datos SQLite
+*.db
+*.db-wal
+*.db-shm
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

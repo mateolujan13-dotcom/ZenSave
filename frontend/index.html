@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zen Save - Login</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet"/>
+<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/app.css"/>
+<style>
+    .glass-panel {
+        background: rgba(26, 26, 26, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+    input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 30px #131313 inset !important;
+        -webkit-text-fill-color: #dbe5d9 !important;
+    }
+    .light { --color-bg: #F0F4F0; }
+    .light body { background-color: #F0F4F0 !important; color: #2A3A2A !important; }
+    .light .bg-background { background-color: #F0F4F0 !important; }
+    .light .bg-surface { background-color: #FAFBFA !important; }
+    .light .text-on-surface { color: #2A3A2A !important; }
+    .light .text-on-surface-variant { color: #5A6E5A !important; }
+    .light .text-primary { color: #006D35 !important; }
+    .light .border-border-subtle { border-color: rgba(0,0,0,0.06) !important; }
+    .light input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #EDF2ED inset !important; -webkit-text-fill-color: #2A3A2A !important; }
+    .light .bg-primary-container { background-color: #00C853 !important; }
+    .light .text-on-primary-container { color: #FFFFFF !important; }
+    .light .bg-surface-variant\/30 { background-color: rgba(237, 242, 237, 0.3) !important; }
+    .light .border-outline-variant { border-color: rgba(0, 0, 0, 0.12) !important; }
+    .light .focus\:border-primary:focus { border-color: #006D35 !important; }
+    .light .focus\:ring-primary\/50:focus { --tw-ring-color: rgba(0, 109, 53, 0.3) !important; }
+    .light .group\/input:focus-within .group-focus-within\/input\:text-primary { color: #006D35 !important; }
+    .light .bg-error-container\/20 { background-color: rgba(198, 40, 40, 0.08) !important; }
+    .light .border-error\/30 { border-color: rgba(198, 40, 40, 0.25) !important; }
+    .light .text-error { color: #C62828 !important; }
+    .light .hover\:underline:hover { text-decoration-color: #006D35 !important; }
+    .light .bg-primary\/5 { background-color: rgba(0, 109, 53, 0.05) !important; }
+    .light .bg-secondary\/5 { background-color: rgba(0, 109, 53, 0.04) !important; }
+    .light .bg-primary\/30 { background-color: rgba(0, 109, 53, 0.15) !important; }
+    .light [class*="bg-gradient-to-br"] { --tw-gradient-from: rgba(0,109,53,0) !important; --tw-gradient-to: rgba(0,109,53,0.03) !important; }
+</style>
+<script>
+    if (localStorage.getItem('zen_token')) {
+        window.location.href = 'dashboard.html';
+    }
+</script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex items-center justify-center relative overflow-hidden font-body-md text-body-md">
+<!-- Atmospheric Orbs -->
+<div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+<main class="w-full max-w-[420px] px-margin-page z-10 flex flex-col items-center">
+    <!-- Brand Centerpiece -->
+    <div class="flex flex-col items-center mb-10">
+        <div class="relative mb-4">
+            <div class="absolute inset-0 bg-primary/30 blur-2xl rounded-full"></div>
+            <span class="material-symbols-outlined text-primary text-6xl relative z-10 drop-shadow-[0_0_15px_rgba(117,255,158,0.8)]" style="font-variation-settings: 'FILL' 1;">spa</span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Zen Save</h1>
+        <p class="font-data-label text-data-label text-on-surface-variant uppercase tracking-widest mt-1">Financial Sanctuary</p>
+    </div>
+
+    <!-- Login Form Card -->
+    <div class="w-full bg-surface border border-border-subtle rounded-[24px] p-card-padding relative group overflow-hidden shadow-2xl">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+        <div class="text-center mb-8 relative z-10">
+            <h2 class="font-headline-md text-headline-md text-on-surface mb-2">Bienvenido al Santuario</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Ingresa para gestionar tu energía financiera.</p>
+        </div>
+
+        <form id="login-form" class="flex flex-col gap-stack-gap relative z-10">
+            <div id="login-error" class="hidden bg-error-container/20 border border-error/30 text-error p-3 rounded-lg text-sm mb-2"></div>
+
+            <!-- Email -->
+            <div class="flex flex-col gap-2">
+                <label class="font-data-label text-data-label text-on-surface-variant uppercase ml-1" for="login-email">Correo Electrónico</label>
+                <div class="relative group/input">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within/input:text-primary transition-colors">mail</span>
+                    <input class="w-full bg-surface-variant/30 border border-outline-variant rounded-xl py-3 pl-12 pr-4 font-data-display text-[16px] text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-on-surface-variant/50" id="login-email" name="email" placeholder="usuario@correo.com" type="email" required autocomplete="email"/>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-2 mt-2">
+                <label class="font-data-label text-data-label text-on-surface-variant uppercase ml-1" for="login-password">Contraseña</label>
+                <div class="relative group/input">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within/input:text-primary transition-colors">lock</span>
+                    <input class="w-full bg-surface-variant/30 border border-outline-variant rounded-xl py-3 pl-12 pr-4 font-data-display text-[16px] text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-on-surface-variant/50" id="login-password" name="password" placeholder="••••••••" type="password" required autocomplete="current-password"/>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <button class="w-full bg-primary-container text-on-primary-container rounded-full py-4 mt-6 font-body-md text-body-md font-bold hover:brightness-110 shadow-[0_0_20px_rgba(0,230,118,0.2)] hover:shadow-[0_0_30px_rgba(0,230,118,0.4)] transition-all duration-300 flex items-center justify-center gap-2" type="submit">
+                <span>Entrar al Santuario</span>
+                <span class="material-symbols-outlined text-xl">arrow_forward</span>
+            </button>
+        </form>
+
+        <!-- Link registro -->
+        <div class="mt-8 text-center relative z-10">
+            <span class="font-body-md text-body-md text-on-surface-variant">¿No tienes una cuenta?</span>
+            <a class="font-body-md text-body-md text-primary ml-1 hover:underline underline-offset-4 transition-all" href="signup.html">Crear una cuenta</a>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zen Save - Únete al Santuario</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#19221a",
+                        "primary-fixed": "#62ff96",
+                        "on-background": "#dbe5d9",
+                        "on-secondary": "#003918",
+                        "on-secondary-fixed-variant": "#005226",
+                        "tertiary-fixed": "#ffdcbf",
+                        "surface-container-highest": "#2e372e",
+                        "surface-container-high": "#232c24",
+                        "inverse-on-surface": "#29332a",
+                        "expense-red": "#FFB4AB",
+                        "tertiary": "#ffdec4",
+                        "error-container": "#93000a",
+                        "outline": "#859585",
+                        "on-tertiary-fixed": "#2d1600",
+                        "inverse-surface": "#dbe5d9",
+                        "border-subtle": "rgba(255, 255, 255, 0.05)",
+                        "background": "#131313",
+                        "surface-container-lowest": "#081009",
+                        "surface-dim": "#0d150e",
+                        "on-tertiary-container": "#794810",
+                        "primary-container": "#00e676",
+                        "on-tertiary-fixed-variant": "#6a3c03",
+                        "warning-amber": "#FFD54F",
+                        "on-primary-container": "#00612e",
+                        "on-secondary-container": "#003717",
+                        "surface": "#1A1A1A",
+                        "surface-variant": "#2e372e",
+                        "on-primary": "#003918",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#fdb878",
+                        "secondary": "#54e083",
+                        "secondary-fixed": "#73fd9c",
+                        "on-surface-variant": "#bacbb9",
+                        "surface-container-low": "#151e16",
+                        "surface-bright": "#323c33",
+                        "on-surface": "#dbe5d9",
+                        "secondary-fixed-dim": "#54e083",
+                        "primary-fixed-dim": "#00e475",
+                        "secondary-container": "#00ad57",
+                        "on-error": "#690005",
+                        "outline-variant": "#3b4a3d",
+                        "inverse-primary": "#006d35",
+                        "on-secondary-fixed": "#00210c",
+                        "tertiary-container": "#ffba79",
+                        "on-primary-fixed-variant": "#005226",
+                        "primary": "#75ff9e",
+                        "on-tertiary": "#4b2800",
+                        "surface-tint": "#00e475",
+                        "on-primary-fixed": "#00210b",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1rem",
+                        "margin-page": "2rem",
+                        "gutter": "1.5rem",
+                        "card-padding": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "data-display": ["JetBrains Mono"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "data-display": ["20px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "data-label": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glow-orb {
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(0,230,118,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .glow-orb-2 {
+            position: absolute;
+            width: 30vw;
+            height: 30vw;
+            background: radial-gradient(circle, rgba(84,224,131,0.1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            pointer-events: none;
+            bottom: -10vh;
+            right: -10vw;
+            animation: float2 25s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5vw, 5vh); }
+        }
+        @keyframes float2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-8vw, -3vh); }
+        }
+
+        /* Input autofill fix for dark mode */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #131313 inset !important;
+            -webkit-text-fill-color: #dbe5d9 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-margin-page">
+<!-- Atmospheric Orbs -->
+<div class="glow-orb top-[-10vh] left-[-10vw]"></div>
+<div class="glow-orb-2"></div>
+<!-- Header / Brand Anchor -->
+<div class="mb-8 text-center z-10 flex flex-col items-center">
+<h1 class="font-headline-lg text-headline-lg text-primary drop-shadow-[0_0_15px_rgba(117,255,158,0.3)] tracking-tight">Zen Save</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Únete al Santuario</p>
+</div>
+<!-- Registration Form Card -->
+<main class="w-full max-w-md bg-surface border border-border-subtle rounded-[24px] p-card-padding z-10 shadow-2xl backdrop-blur-sm relative group overflow-hidden">
+<!-- Hover Glow Effect on Card -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03)_0%,transparent_50%)] pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100"></div>
+<form class="flex flex-col gap-stack-gap relative z-10">
+<!-- Full Name Field -->
+<div class="flex flex-col gap-2">
+<label class="font-body-md text-body-md text-on-surface" for="fullName">Nombre Completo</label>
+<div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary/50 rounded-lg bg-surface-container transition-shadow duration-300">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant select-none" data-icon="person">person</span>
+<input class="w-full bg-transparent border-none py-3 pl-10 pr-4 text-on-surface font-data-label text-data-label placeholder:text-on-surface-variant/50 focus:ring-0 rounded-lg outline-none" id="fullName" placeholder="Tu nombre completo" type="text"/>
+</div>
+</div>
+<!-- Email Field -->
+<div class="flex flex-col gap-2">
+<label class="font-body-md text-body-md text-on-surface" for="email">Correo Electrónico</label>
+<div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary/50 rounded-lg bg-surface-container transition-shadow duration-300">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant select-none" data-icon="mail">mail</span>
+<input class="w-full bg-transparent border-none py-3 pl-10 pr-4 text-on-surface font-data-label text-data-label placeholder:text-on-surface-variant/50 focus:ring-0 rounded-lg outline-none" id="email" placeholder="ejemplo@correo.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<label class="font-body-md text-body-md text-on-surface" for="password">Contraseña</label>
+<div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary/50 rounded-lg bg-surface-container transition-shadow duration-300">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant select-none" data-icon="lock">lock</span>
+<input class="w-full bg-transparent border-none py-3 pl-10 pr-4 text-on-surface font-data-label text-data-label placeholder:text-on-surface-variant/50 focus:ring-0 rounded-lg outline-none" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action Button -->
+<button class="mt-4 w-full bg-primary-container text-on-primary-container font-headline-md text-body-md font-bold py-3 rounded-full shadow-[0_0_20px_rgba(0,230,118,0.2)] hover:shadow-[0_0_30px_rgba(0,230,118,0.4)] hover:bg-primary transition-all duration-300 active:scale-95" type="button">
+                Crear Cuenta
+            </button>
+<!-- Secondary Action -->
+<div class="mt-4 text-center">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">
+                    ¿Ya tienes una cuenta? <span class="text-on-surface border-b border-on-surface/30 hover:border-primary">Iniciar sesión</span>
+</a>
+</div>
+</form>
+</main>
+<script>
+        // Simple password toggle logic for the prototype
+        const togglePassword = document.querySelector('button[type="button"] span.material-symbols-outlined[data-icon="visibility"]');
+        const passwordInput = document.getElementById('password');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.parentElement.addEventListener('click', function (e) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Toggle icon
+                if(type === 'password') {
+                    togglePassword.textContent = 'visibility';
+                    togglePassword.setAttribute('data-icon', 'visibility');
+                } else {
+                    togglePassword.textContent = 'visibility_off';
+                    togglePassword.setAttribute('data-icon', 'visibility_off');
+                }
+            });
+        }
+    </script>
+</body></html>

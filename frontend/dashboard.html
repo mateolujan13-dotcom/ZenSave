@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zen Save - Digital Sanctuary</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;display=block" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/app.css"/>
+<style>
+        body {
+            background-color: #131313;
+            color: #dbe5d9;
+            overflow-x: hidden;
+        }
+
+        /* Atmospheric Orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .orb-1 { top: -10%; left: 20%; width: 500px; height: 500px; background-color: #75ff9e; }
+        .orb-2 { bottom: -20%; right: 10%; width: 600px; height: 600px; background-color: #54e083; }
+
+        /* Card Hover Glow */
+        .glass-card {
+            background-color: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(117, 255, 158, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Neon Button Glow */
+        .neon-btn-glow {
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
+        }
+        
+        /* Progress Bar Animation */
+        .progress-fill {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 10px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5));
+            border-radius: 0 4px 4px 0;
+        }
+        
+        /* Bar Chart Styles */
+        .chart-bar {
+            width: 24px;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+        }
+        
+        /* Donut Chart Approximation via conic-gradient */
+        .donut-chart {
+            background: conic-gradient(
+                #00e676 0% 35%, 
+                #FFB4AB 35% 60%, 
+                #FFD54F 60% 85%, 
+                #2e372e 85% 100%
+            );
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .donut-chart::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            background-color: #1A1A1A;
+            border-radius: 50%;
+        }
+    </style>
+    <style>
+        .light { --color-bg: #F0F4F0; }
+        .light body { background-color: #F0F4F0 !important; color: #2A3A2A !important; }
+        .light .glass-card { background-color: #FAFBFA; border-color: rgba(0,0,0,0.06); }
+        .light .bg-surface { background-color: #FAFBFA !important; }
+        .light .text-on-surface { color: #2A3A2A !important; }
+        .light .text-on-surface-variant { color: #5A6E5A !important; }
+        .light .text-on-background { color: #2A3A2A !important; }
+        .light .text-primary { color: #006D35 !important; }
+        .light .text-expense-red { color: #C62828 !important; }
+        .light .bg-surface-container-low { background-color: #EDF2ED !important; }
+        .light .bg-surface-container-high { background-color: #E2E8E2 !important; }
+        .light .bg-surface-container-highest { background-color: #DCE4DC !important; }
+        .light .bg-surface-variant { background-color: #DCE4DC !important; }
+        .light .bg-surface-container { background-color: #E8EDE8 !important; }
+        .light .border-border-subtle { border-color: rgba(0,0,0,0.06) !important; }
+        .light .bg-background { background-color: #F0F4F0 !important; }
+        .light nav.bg-surface { background-color: #FAFBFA !important; }
+        .light .bg-background\/80 { background-color: rgba(240, 244, 240, 0.8) !important; }
+        .light .bg-background\/50 { background-color: rgba(240, 244, 240, 0.5) !important; }
+        .light .bg-surface-container-highest\/90 { background-color: rgba(220, 228, 220, 0.9) !important; }
+        .light .border-background { border-color: #F0F4F0 !important; }
+        .light .border-white\/5 { border-color: rgba(0, 0, 0, 0.05) !important; }
+        .light .text-warning-amber { color: #B8860B !important; }
+        .light .glass-card.bg-gradient-to-br {
+            background-image: linear-gradient(to bottom right, #FAFBFA, #EDF2ED) !important;
+            border-color: rgba(0, 109, 53, 0.2) !important;
+        }
+        .light .border-primary\/30 { border-color: rgba(0, 109, 53, 0.3) !important; }
+    </style>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Verificar autenticación
+        window.checkAuth();
+    </script>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex relative">
+<!-- Atmospheric Background Orbs -->
+<div class="ambient-orb orb-1"></div>
+<div class="ambient-orb orb-2"></div>
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col bg-surface fixed left-0 top-0 h-full w-64 z-40 border-r border-border-subtle py-8">
+    <div class="px-6 mb-10 flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+        </div>
+        <div>
+            <h1 class="font-headline-md text-headline-md font-bold text-primary">Zen Save</h1>
+            <p class="font-data-label text-data-label text-on-surface-variant">Financial Sanctuary</p>
+        </div>
+    </div>
+    <ul class="flex-1 flex flex-col gap-1 px-3">
+        <li>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold border-l-2 border-primary transition-all" href="dashboard.html">
+                <span class="material-symbols-outlined">grid_view</span>
+                Resumen
+            </a>
+        </li>
+        <li>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all" href="transactions.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                Movimientos
+            </a>
+        </li>
+        <li>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all" href="ai.html">
+                <span class="material-symbols-outlined">smart_toy</span>
+                Asesor ZEN
+            </a>
+        </li>
+        <li>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all" href="settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                Ajustes
+            </a>
+        </li>
+    </ul>
+    <div class="px-3 border-t border-border-subtle pt-4 mt-auto space-y-1">
+        <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all">
+            <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
+            <span class="hidden md:block text-sm">Cambiar tema</span>
+        </button>
+        <button onclick="window.logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-error transition-all">
+            <span class="material-symbols-outlined">logout</span>
+            Cerrar Sesión
+        </button>
+    </div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 relative z-10 p-gutter md:p-margin-page pb-24 md:pb-margin-page mt-16 md:mt-0">
+<!-- TopAppBar (Shared Component for Mobile/Responsive context, but rendered as top header here per layout) -->
+<header class="bg-background/80 backdrop-blur-xl text-primary dark:text-primary font-headline-md text-headline-md fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] z-50 bg-transparent flex justify-between items-center px-gutter py-4 transition-opacity duration-300 md:hidden border-b border-border-subtle shadow-[none]">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Zen Save</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<div id="user-avatar" class="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm ml-2">U</div><div class="hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image with a solid dark background and a single white letter 'A' in the center, representing a user profile picture in a sleek dark mode interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvsaOzzosVjeMfdsOkkasmUJilp-PyFd8vMmAX9Aj-n7N5BKFMCt8fIuJvndqdA-2hzz1iP3bwbHd44K7GbQRIqNuyU8IBGQjqqBZRU1I2LoHdwvQtNMFlJMpSgx5Dwmkx7XXQYBAAVOAvLnvv2q1Ne-3hd6FBnfMLshq71ikam3epiqSAhmDeXMeS7CwhLSbP94Zwb_e-3MqHPqnvhmvY69-v90at5sN2xvmikstF4f2hDRL2Sqkzjo4407ulhyZA70rcZkJjYUfB"/>
+</div>
+</div>
+</header>
+<!-- Canvas Content -->
+<div class="max-w-6xl mx-auto space-y-8 mt-8 md:mt-4">
+<!-- Greeting -->
+<section>
+<h2 class="font-headline-lg text-headline-lg text-on-background tracking-tight">Resumen de <span id="current-month" class="text-primary">...</span></h2>
+<p class="text-on-surface-variant mt-1">Hola de nuevo, <span id="user-name" class="font-bold text-on-surface">Usuario</span>. Aquí está el flujo de tu energía financiera.</p>
+</section>
+<!-- Top Section: Metric Cards Bento -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-stack-gap">
+<!-- Card 1: Ingresos -->
+<div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">arrow_downward</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Ingresos del Mes</span>
+</div>
+<div>
+<div id="val-income" class="font-data-display text-data-display text-primary text-3xl font-bold tracking-tight mb-1">$0.00</div>
+<div class="text-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-primary">trending_up</span>
+<span>+12% vs mes anterior</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Gastos -->
+<div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-expense-red">arrow_upward</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Gastos del Mes</span>
+</div>
+<div>
+<div id="val-expense" class="font-data-display text-data-display text-expense-red text-3xl font-bold tracking-tight mb-1">$0.00</div>
+<div class="text-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-on-surface-variant">trending_flat</span>
+<span>Dentro del presupuesto</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Balance -->
+<div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between relative overflow-hidden" style="box-shadow: 0 4px 30px rgba(117, 255, 158, 0.05);">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface">account_balance</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Balance Acumulado</span>
+</div>
+<div class="relative z-10">
+<div id="val-balance" class="font-data-display text-data-display text-on-background text-4xl font-bold tracking-tight mb-1">$0.00</div>
+<div id="val-monthly" class="text-sm text-on-surface-variant flex items-center gap-1">
+<span>Este mes: </span><span id="val-monthly-balance" class="font-semibold">$0.00</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Savings -->
+<div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Mis Retos de Ahorro</span>
+</div>
+<div>
+<div id="val-savings" class="font-data-display text-data-display text-primary text-3xl font-bold tracking-tight mb-1">$0.00</div>
+<div class="text-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-primary">trending_up</span>
+<span>Ahorro acumulado</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Central Section: Charts & Progress -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-stack-gap">
+<!-- Main Bar Chart (2 columns) -->
+<div class="glass-card rounded-3xl p-card-padding lg:col-span-2 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-background text-xl">Flujo de 6 Meses</h3>
+<div class="flex gap-4 font-data-label text-data-label">
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm bg-primary"></div> Ingresos</div>
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm bg-expense-red"></div> Gastos</div>
+</div>
+</div>
+<div class="h-[250px] w-full" id="bar-container">
+<canvas id="bar-chart"></canvas>
+</div>
+</div>
+<!-- Donut Chart & Progress (1 column) -->
+<div class="flex flex-col gap-stack-gap">
+<!-- Donut Chart -->
+<div class="glass-card rounded-3xl p-card-padding flex-1 flex flex-col items-center justify-center">
+<h3 class="font-headline-md text-headline-md text-on-background text-lg w-full text-left mb-4">Distribución</h3>
+<div class="flex-1 min-h-[150px] relative w-full flex items-center justify-center" id="donut-container">
+<canvas id="donut-chart"></canvas>
+</div>
+</div>
+<!-- Budget Progress -->
+<div class="glass-card rounded-3xl p-card-padding">
+<div class="flex justify-between items-end mb-2">
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">Presupuesto Mensual</span>
+<span id="goal-text-percent" class="font-data-display text-data-display text-sm text-on-background"></span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-3 mb-2 overflow-hidden border border-white/5">
+<div id="goal-bar" class="bg-primary h-3 rounded-full progress-fill shadow-[0_0_10px_rgba(117,255,158,0.5)]" style="width: 0%;"></div>
+</div>
+<div id="goal-text" class="flex justify-between font-data-label text-data-label text-on-surface-variant opacity-70 w-full mt-2">
+<span>Cargando presupuesto...</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-stack-gap">
+<!-- Gastos Hormiga -->
+<div class="glass-card rounded-3xl p-card-padding">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-background text-xl">Gastos Hormiga</h3>
+<button class="text-primary hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<ul id="micro-expenses-list" class="space-y-4 max-h-[250px] overflow-y-auto pr-2">
+<li class="p-4 bg-background/50 rounded-xl animate-pulse h-16"></li>
+</ul>
+</div>
+<!-- Interactive Banner CTA -->
+<div class="glass-card rounded-3xl p-card-padding flex flex-col justify-center items-center text-center relative overflow-hidden bg-gradient-to-br from-surface to-surface-container-low border border-primary/20">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50"></div>
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-6 relative z-10 border border-primary/30 shadow-[0_0_20px_rgba(117,255,158,0.2)]">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background text-2xl mb-2 relative z-10">¿Necesitás optimizar tu presupuesto?</h3>
+<p class="text-on-surface-variant mb-8 max-w-sm relative z-10">La inteligencia de Zen está lista para analizar tus flujos y encontrar espacios de calma financiera.</p>
+<button onclick="window.location.href='ai.html'" class="bg-primary text-on-primary-fixed px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 neon-btn-glow relative z-10 transform hover:-translate-y-1 cursor-pointer">
+<span class="material-symbols-outlined">chat_bubble</span>
+                        Hablá con Zen AI
+                    </button>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Nav for Mobile (Derived from SideNav context) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-md border-t border-border-subtle z-50 px-4 py-2 flex justify-between items-center">
+    <a class="flex flex-col items-center p-2 text-primary" href="dashboard.html">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+        <span class="font-data-label text-[10px] mt-1">Resumen</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-on-surface-variant" href="transactions.html">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span class="font-data-label text-[10px] mt-1">Movimientos</span>
+    </a>
+    <a href="ai.html" class="w-12 h-12 rounded-full bg-primary text-on-primary-fixed flex items-center justify-center shadow-lg -mt-6 border-4 border-background">
+        <span class="material-symbols-outlined">smart_toy</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-on-surface-variant" href="settings.html">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="font-data-label text-[10px] mt-1">Ajustes</span>
+    </a>
+</nav>
+<script>
+        // Micro-interactions and subtle effects
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate progress bar on load
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.progress-fill');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 300);
+
+            // Simple parallax for background orbs to make them feel alive
+            document.addEventListener('mousemove', (e) => {
+                const orbs = document.querySelectorAll('.ambient-orb');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+
+                orbs.forEach((orb, index) => {
+                    const factor = index === 0 ? 20 : -15;
+                    const moveX = (mouseX - 0.5) * factor;
+                    const moveY = (mouseY - 0.5) * factor;
+                    orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            });
+        });
+    </script>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="js/dashboard.js"></script>
+</body></html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Movimientos - Zen Save</title>
+<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/app.css"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@500&display=block" rel="stylesheet"/>
+<style>
+    .hover-glow:hover { box-shadow: 0 0 20px rgba(117,255,158,0.15); border-color: rgba(117,255,158,0.3); }
+    .bg-orb { position: fixed; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); opacity: 0.03; z-index: -1; pointer-events: none; }
+    .orb-1 { top: -100px; left: -100px; background: #75ff9e; }
+    .orb-2 { bottom: -200px; right: -200px; background: #54e083; }
+    .tx-list::-webkit-scrollbar { width: 6px; }
+    .tx-list::-webkit-scrollbar-track { background: transparent; }
+    .tx-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    /* Modal overlay */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; }
+    .modal-overlay.active { display: flex; }
+    .light { --color-bg: #F0F4F0; }
+    .light body { background-color: #F0F4F0 !important; color: #2A3A2A !important; }
+    .light .bg-surface { background-color: #FAFBFA !important; }
+    .light .text-on-surface { color: #2A3A2A !important; }
+    .light .text-on-surface-variant { color: #5A6E5A !important; }
+    .light .text-primary { color: #006D35 !important; }
+    .light .text-expense-red { color: #C62828 !important; }
+    .light .bg-surface-container-low { background-color: #EDF2ED !important; }
+    .light .bg-surface-container-high { background-color: #E2E8E2 !important; }
+    .light .bg-background { background-color: #F0F4F0 !important; }
+    .light .bg-surface-container { background-color: #E8EDE8 !important; }
+    .light .border-border-subtle { border-color: rgba(0,0,0,0.06) !important; }
+    .light nav.bg-surface { background-color: #FAFBFA !important; }
+    .light .bg-background\/80 { background-color: rgba(240, 244, 240, 0.8) !important; }
+    .light .bg-surface\/50 { background-color: rgba(250, 251, 250, 0.5) !important; }
+    .light .bg-surface-container-highest\/90 { background-color: rgba(220, 228, 220, 0.9) !important; }
+    .light .border-background { border-color: #F0F4F0 !important; }
+    .light .bg-surface-variant { background-color: #DCE4DC !important; }
+    .light .bg-primary\/10 { background-color: rgba(0, 109, 53, 0.08) !important; }
+    .light .border-primary\/20 { border-color: rgba(0, 109, 53, 0.15) !important; }
+    .light .hover\:bg-surface-variant\/30:hover { background-color: rgba(220, 228, 220, 0.5) !important; }
+    .light .hover\:bg-primary\/10:hover { background-color: rgba(0, 109, 53, 0.08) !important; }
+    .light .bg-expense-red\/10 { background-color: rgba(198, 40, 40, 0.08) !important; }
+    .light .border-expense-red\/20 { border-color: rgba(198, 40, 40, 0.15) !important; }
+    .light .hover\:bg-expense-red\/10:hover { background-color: rgba(198, 40, 40, 0.08) !important; }
+    .light .hover\:text-on-surface:hover { color: #2A3A2A !important; }
+    .light .hover-glow:hover { box-shadow: 0 0 20px rgba(0, 109, 53, 0.1) !important; border-color: rgba(0, 109, 53, 0.2) !important; }
+    .light .focus\:border-primary\/50:focus { border-color: rgba(0, 109, 53, 0.4) !important; }
+    .light [color-scheme\:dark] { color-scheme: light !important; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden antialiased">
+<div class="bg-orb orb-1"></div>
+<div class="bg-orb orb-2"></div>
+
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar Desktop -->
+    <nav class="hidden md:flex flex-col bg-surface fixed left-0 top-0 h-full w-64 z-40 border-r border-border-subtle py-8">
+        <div class="px-6 mb-10 flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+            </div>
+            <div>
+                <h1 class="font-headline-md text-headline-md font-bold text-primary">Zen Save</h1>
+                <p class="font-data-label text-data-label text-on-surface-variant">Financial Sanctuary</p>
+            </div>
+        </div>
+        <ul class="flex-1 flex flex-col gap-1 px-3">
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all" href="dashboard.html">
+                    <span class="material-symbols-outlined">grid_view</span>
+                    Resumen
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold border-l-2 border-primary transition-all" href="transactions.html">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    Movimientos
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all" href="ai.html">
+                    <span class="material-symbols-outlined">smart_toy</span>
+                    Asesor ZEN
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all" href="settings.html">
+                    <span class="material-symbols-outlined">settings</span>
+                    Ajustes
+                </a>
+            </li>
+        </ul>
+        <div class="px-3 border-t border-border-subtle pt-4 mt-auto space-y-1">
+            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-primary transition-all">
+                <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
+                <span class="hidden md:block text-sm">Cambiar tema</span>
+            </button>
+            <button onclick="window.logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant font-body-md hover:bg-surface-variant/30 hover:text-error transition-all">
+                <span class="material-symbols-outlined">logout</span>
+                Cerrar Sesión
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative md:ml-64">
+        <!-- Header -->
+        <header class="flex justify-between items-center px-gutter h-16 w-full z-50 bg-background/80 backdrop-blur-xl shrink-0 border-b border-border-subtle">
+            <div class="md:hidden flex items-center">
+                <h1 class="font-headline-md text-headline-md text-primary tracking-tight">Zen Save</h1>
+            </div>
+            <div class="hidden md:flex flex-1 max-w-xl mx-auto items-center gap-4">
+                <div class="relative w-full">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                    <input id="search-input" class="w-full bg-surface/50 border border-border-subtle rounded-full py-2 pl-12 pr-4 text-on-surface focus:outline-none focus:border-primary/50 focus:bg-surface transition-all font-body-md text-body-md placeholder-on-surface-variant/50" placeholder="Buscar movimientos..." type="text"/>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-data-label text-data-label text-on-surface-variant">Hola, <span id="user-name" class="text-primary font-bold">...</span></span>
+            </div>
+        </header>
+
+        <!-- Scroll Area -->
+        <div class="flex-1 overflow-y-auto overflow-x-hidden p-margin-page tx-list">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Mis Movimientos</h2>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant">Tu flujo financiero reciente.</p>
+                    </div>
+                    <!-- Filtros -->
+                    <div class="flex gap-3">
+                        <select id="filter-type" class="bg-surface border border-border-subtle rounded-full px-4 py-2 text-on-surface font-data-label text-data-label focus:outline-none focus:border-primary transition-all appearance-none">
+                            <option value="">Todos</option>
+                            <option value="income">Ingresos</option>
+                            <option value="expense">Gastos</option>
+                        </select>
+                        <input id="filter-month" type="month" class="bg-surface border border-border-subtle rounded-full px-4 py-2 text-on-surface font-data-label text-data-label focus:outline-none focus:border-primary transition-all [color-scheme:dark]"/>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-stack-gap items-start">
+                    <!-- Lista Transacciones -->
+                    <div class="flex-1 w-full">
+                        <div id="transactions-list" class="space-y-3">
+                            <div class="p-8 text-center text-on-surface-variant font-data-label text-data-label">Cargando movimientos...</div>
+                        </div>
+                    </div>
+
+                    <!-- Panel Nuevo Movimiento (Desktop) -->
+                    <div class="hidden lg:block w-full lg:w-[360px] shrink-0 sticky top-0">
+                        <div class="bg-surface border border-border-subtle rounded-[24px] p-6 shadow-[0_0_40px_rgba(0,0,0,0.3)] relative overflow-hidden group hover-glow transition-all duration-500">
+                            <div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-[50px] group-hover:bg-primary/20 transition-all duration-500"></div>
+                            <h3 class="form-heading font-headline-md text-headline-md text-on-surface mb-6 relative z-10">Nuevo Movimiento</h3>
+                            <form id="tx-form" class="space-y-4 relative z-10">
+                                <!-- Tipo -->
+                                <div class="flex bg-surface-container-high rounded-full p-1 border border-border-subtle">
+                                    <button type="button" data-type="expense" onclick="setType('expense', this)" class="type-btn flex-1 py-2 rounded-full font-body-md text-body-md bg-expense-red/10 text-expense-red border border-expense-red/20 transition-all">Gasto</button>
+                                    <button type="button" data-type="income" onclick="setType('income', this)" class="type-btn flex-1 py-2 rounded-full font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-all">Ingreso</button>
+                                </div>
+                                <input type="hidden" name="type" id="tx-type" value="expense"/>
+                                <!-- Monto -->
+                                <div class="relative">
+                                    <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Monto</label>
+                                    <div class="relative flex items-center">
+                                        <span class="absolute left-4 font-data-display text-data-display text-on-surface-variant">$</span>
+                                        <input name="amount" id="tx-amount" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-4 pl-10 pr-4 font-data-display text-data-display text-on-surface focus:outline-none focus:border-primary/50 transition-all placeholder-on-surface-variant/30" placeholder="0.00" type="number" step="0.01" min="0" required/>
+                                    </div>
+                                </div>
+                                <!-- Descripción -->
+                                <div>
+                                    <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Descripción</label>
+                                    <input name="description" id="tx-description" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all placeholder-on-surface-variant/30" placeholder="¿En qué fue?" type="text"/>
+                                </div>
+                                <!-- Categoría y Fecha -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Categoría</label>
+                                        <select name="category_id" id="tx-category" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all appearance-none">
+                                            <option value="">General</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Fecha</label>
+                                        <input name="date" id="tx-date" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all [color-scheme:dark]" type="date"/>
+                                    </div>
+                                </div>
+                                <!-- Submit -->
+                                <button type="submit" class="w-full mt-2 bg-primary text-on-primary font-headline-md text-body-lg py-4 rounded-[16px] shadow-[0_0_20px_rgba(117,255,158,0.2)] hover:shadow-[0_0_30px_rgba(117,255,158,0.4)] hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined">add_circle</span>
+                                    Registrar Movimiento
+                                </button>
+                                <button type="button" onclick="cancelEdit()" class="cancel-edit hidden w-full mt-2 bg-transparent text-on-surface-variant font-body-md text-body-lg py-3 rounded-[16px] border border-border-subtle hover:bg-surface-variant/30 transition-all">
+                                    Cancelar edición
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="h-24 md:hidden"></div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal Móvil -->
+<div id="tx-modal" class="modal-overlay">
+    <div class="bg-surface border border-border-subtle rounded-[24px] p-6 w-full max-w-md mx-4 relative max-h-[90vh] overflow-y-auto">
+        <button id="btn-close-modal" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors z-10">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h3 class="form-heading font-headline-md text-headline-md text-on-surface mb-6">Nuevo Movimiento</h3>
+        <form id="tx-form-mobile" class="space-y-4 relative z-10">
+            <div class="flex bg-surface-container-high rounded-full p-1 border border-border-subtle">
+                <button type="button" data-type="expense" onclick="setType('expense', this)" class="type-btn flex-1 py-2 rounded-full font-body-md text-body-md bg-expense-red/10 text-expense-red border border-expense-red/20 transition-all">Gasto</button>
+                <button type="button" data-type="income" onclick="setType('income', this)" class="type-btn flex-1 py-2 rounded-full font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-all">Ingreso</button>
+            </div>
+            <input type="hidden" name="type" id="tx-type-modal" value="expense"/>
+            <div class="relative">
+                <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Monto</label>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 font-data-display text-data-display text-on-surface-variant">$</span>
+                    <input name="amount" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-4 pl-10 pr-4 font-data-display text-data-display text-on-surface focus:outline-none focus:border-primary/50 transition-all placeholder-on-surface-variant/30" placeholder="0.00" type="number" step="0.01" min="0" required/>
+                </div>
+            </div>
+            <div>
+                <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Descripción</label>
+                <input name="description" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all placeholder-on-surface-variant/30" placeholder="¿En qué fue?" type="text"/>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Categoría</label>
+                    <select name="category_id" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all appearance-none">
+                        <option value="">General</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-data-label text-data-label text-on-surface-variant mb-2">Fecha</label>
+                    <input name="date" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all [color-scheme:dark]" type="date"/>
+                </div>
+            </div>
+            <button type="submit" class="w-full mt-2 bg-primary text-on-primary font-headline-md text-body-lg py-4 rounded-[16px] shadow-[0_0_20px_rgba(117,255,158,0.2)] hover:shadow-[0_0_30px_rgba(117,255,158,0.4)] hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">add_circle</span>
+                Registrar Movimiento
+            </button>
+            <button type="button" onclick="cancelEdit()" class="cancel-edit hidden w-full mt-2 bg-transparent text-on-surface-variant font-body-md text-body-lg py-3 rounded-[16px] border border-border-subtle hover:bg-surface-variant/30 transition-all">
+                Cancelar edición
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Bottom Nav Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-md border-t border-border-subtle z-50 px-4 py-2 flex justify-between items-center">
+    <a class="flex flex-col items-center p-2 text-on-surface-variant" href="dashboard.html">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="font-data-label text-[10px] mt-1">Resumen</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-primary" href="transactions.html">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+        <span class="font-data-label text-[10px] mt-1">Movimientos</span>
+    </a>
+    <a href="ai.html" class="w-12 h-12 rounded-full bg-primary text-on-primary-fixed flex items-center justify-center shadow-lg -mt-6 border-4 border-background">
+        <span class="material-symbols-outlined">smart_toy</span>
+    </a>
+    <a class="flex flex-col items-center p-2 text-on-surface-variant" href="settings.html">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="font-data-label text-[10px] mt-1">Ajustes</span>
+    </a>
+</nav>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+function setType(type, btn) {
+    document.querySelectorAll('input[name="type"]').forEach(el => el.value = type);
+    document.querySelectorAll('.type-btn').forEach(b => {
+        const isExpense = b.dataset.type === 'expense';
+        if ((isExpense && type === 'expense') || (!isExpense && type === 'income')) {
+            b.className = isExpense
+                ? 'type-btn flex-1 py-2 rounded-full font-body-md text-body-md bg-expense-red/10 text-expense-red border border-expense-red/20 transition-all'
+                : 'type-btn flex-1 py-2 rounded-full font-body-md text-body-md bg-primary/10 text-primary border border-primary/20 transition-all';
+        } else {
+            b.className = 'type-btn flex-1 py-2 rounded-full font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-all';
+        }
+    });
+}
+</script>
+<script src="js/transactions.js"></script>
+</body>
+</html>
