@@ -1,2 +1,541 @@
 zephyr.proxy.rlwy.net:38437
-/var/lib/mysql
+/var/lib/mysql2026-06-01T04:17:14.279452936Z [err]               ~~~~^^
+2026-06-01T04:17:14.279453490Z [err]      )
+2026-06-01T04:17:14.279461308Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:14.279465563Z [err]      ^
+2026-06-01T04:17:14.279466534Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:14.279472300Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:14.279474769Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:14.279477861Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:14.279480986Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:14.279484778Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:14.279487970Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:14.279491324Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:14.279494814Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:14.279498595Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:14.279502167Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:14.279506800Z [err]      run(
+2026-06-01T04:17:14.279508599Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:14.279511414Z [err]      ~~~^
+2026-06-01T04:17:14.279516532Z [err]          app,
+2026-06-01T04:17:14.279516707Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:14.279520389Z [err]          ^^^^
+2026-06-01T04:17:14.279523666Z [err]      sys.exit(main())
+2026-06-01T04:17:14.279524955Z [err]      ...<48 lines>...
+2026-06-01T04:17:14.279528876Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:14.279532196Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:14.280046731Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:14.280052359Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:14.280062367Z [err]      config.load_app()
+2026-06-01T04:17:14.280073311Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:14.280077295Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:14.280079228Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:14.280081931Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:14.280084542Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:14.280087063Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:14.280088367Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:14.280092177Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:14.280092395Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:14.280094630Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:14.280094831Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:14.280101157Z [err]      ~~~~~~~^^
+2026-06-01T04:17:14.280102851Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:14.280103783Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:14.280105294Z [err]      init_db()
+2026-06-01T04:17:14.280110258Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:14.280112457Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:14.280115860Z [err]      p = _db_path()
+2026-06-01T04:17:14.280763673Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:14.280813751Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:14.280817009Z [err]          ^^^^^^^^
+2026-06-01T04:17:15.197983352Z [inf]  Starting Container
+2026-06-01T04:17:15.265379247Z [err]      sys.exit(main())
+2026-06-01T04:17:15.265381160Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:15.265384491Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:15.265389912Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:15.265392171Z [err]               ~~~~^^
+2026-06-01T04:17:15.265395452Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:15.265397679Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:15.265400508Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:15.265404651Z [err]      ...<48 lines>...
+2026-06-01T04:17:15.265406326Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:15.265410323Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:15.265411764Z [err]          app,
+2026-06-01T04:17:15.265415024Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:15.265415026Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:15.265424199Z [err]      )
+2026-06-01T04:17:15.265424407Z [err]          ^^^^
+2026-06-01T04:17:15.265428124Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:15.265428289Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:15.265431498Z [err]      ^
+2026-06-01T04:17:15.265437067Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:15.265438924Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:15.265441158Z [err]      run(
+2026-06-01T04:17:15.265443635Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:15.265447875Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:15.265450434Z [err]      ~~~^
+2026-06-01T04:17:15.265976559Z [err]      p = _db_path()
+2026-06-01T04:17:15.265977568Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:15.265981685Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:15.265984765Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:15.265989023Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:15.265991405Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:15.265994524Z [err]      ~~~~~~~^^
+2026-06-01T04:17:15.265997345Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:15.265998616Z [err]      init_db()
+2026-06-01T04:17:15.266002922Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:15.266004353Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:15.266008084Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:15.266011310Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:15.266014222Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:15.266025364Z [err]      config.load_app()
+2026-06-01T04:17:15.266028622Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:15.266031805Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:15.266036299Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:15.266039643Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:15.266042640Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:15.266045820Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:15.266468731Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:15.266472092Z [err]          ^^^^^^^^
+2026-06-01T04:17:15.266475438Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:16.798750283Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:16.800686679Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:16.800690114Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:16.800694841Z [err]      sys.exit(main())
+2026-06-01T04:17:16.800696442Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:16.800703174Z [err]               ~~~~^^
+2026-06-01T04:17:16.800703571Z [err]      run(
+2026-06-01T04:17:16.800704037Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:16.800712025Z [err]      ~~~^
+2026-06-01T04:17:16.800712599Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:16.800714693Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:16.800718692Z [err]          app,
+2026-06-01T04:17:16.800722896Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:16.800723026Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:16.800725959Z [err]          ^^^^
+2026-06-01T04:17:16.800730572Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:16.800731932Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:16.800733282Z [err]      ...<48 lines>...
+2026-06-01T04:17:16.800738000Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:16.800738134Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:16.800743469Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:16.800743864Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:16.800749265Z [err]      )
+2026-06-01T04:17:16.800752189Z [err]      ^
+2026-06-01T04:17:16.800754921Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:16.802106169Z [err]      config.load_app()
+2026-06-01T04:17:16.802110022Z [err]      ~~~~~~~^^
+2026-06-01T04:17:16.802111722Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:16.802116897Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:16.802117223Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:16.802123063Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:16.802123296Z [err]      p = _db_path()
+2026-06-01T04:17:16.802128204Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:16.802128523Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:16.802132337Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:16.802135287Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:16.802138075Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:16.802140940Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:16.802144659Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:16.802147610Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:16.802150444Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:16.802153436Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:16.802156255Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:16.802159464Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:16.802162267Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:16.802165371Z [err]      init_db()
+2026-06-01T04:17:16.803555138Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:16.803557908Z [err]          ^^^^^^^^
+2026-06-01T04:17:16.803560934Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:18.488927083Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:18.488927478Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:18.488933967Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:18.488936431Z [err]      run(
+2026-06-01T04:17:18.488938745Z [err]      sys.exit(main())
+2026-06-01T04:17:18.488942797Z [err]      ~~~^
+2026-06-01T04:17:18.488944316Z [err]               ~~~~^^
+2026-06-01T04:17:18.488947844Z [err]          app,
+2026-06-01T04:17:18.488949641Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:18.488952958Z [err]          ^^^^
+2026-06-01T04:17:18.488956128Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:18.488958115Z [err]      ...<48 lines>...
+2026-06-01T04:17:18.488961178Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:18.488963340Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:18.488966661Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:18.488968456Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:18.488972501Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:18.488973739Z [err]      )
+2026-06-01T04:17:18.488979016Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:18.488979437Z [err]      ^
+2026-06-01T04:17:18.488984096Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:18.488984439Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:18.488988630Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:18.488991409Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:18.488994116Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:18.489993380Z [err]      ~~~~~~~^^
+2026-06-01T04:17:18.489997474Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:18.490001035Z [err]      p = _db_path()
+2026-06-01T04:17:18.490004251Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:18.490017028Z [err]      config.load_app()
+2026-06-01T04:17:18.490019932Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:18.490022719Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:18.490035356Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:18.490038370Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:18.490041281Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:18.490045251Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:18.490048006Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:18.490050820Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:18.490054340Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:18.490057233Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:18.490060080Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:18.490062701Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:18.490066061Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:18.490068935Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:18.490071584Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:18.490074558Z [err]      init_db()
+2026-06-01T04:17:18.490617598Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:18.490621283Z [err]          ^^^^^^^^
+2026-06-01T04:17:18.490624220Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:20.273666187Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:20.273677096Z [err]      )
+2026-06-01T04:17:20.273677290Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:20.273682984Z [err]      ^
+2026-06-01T04:17:20.273687659Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:20.273690508Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:20.273694754Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:20.273699744Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:20.273704885Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:20.273711604Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:20.273718509Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:20.273723308Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:20.273728104Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:20.273732356Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:20.273736932Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:20.273741226Z [err]      run(
+2026-06-01T04:17:20.273745823Z [err]      ~~~^
+2026-06-01T04:17:20.273750311Z [err]          app,
+2026-06-01T04:17:20.273755571Z [err]          ^^^^
+2026-06-01T04:17:20.273759898Z [err]      ...<48 lines>...
+2026-06-01T04:17:20.273764756Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:20.273782543Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:20.273786797Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:20.273790513Z [err]      sys.exit(main())
+2026-06-01T04:17:20.273793426Z [err]               ~~~~^^
+2026-06-01T04:17:20.274593408Z [err]      config.load_app()
+2026-06-01T04:17:20.274600892Z [err]      p = _db_path()
+2026-06-01T04:17:20.274605229Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:20.274607291Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:20.274612439Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:20.274615070Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:20.274620134Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:20.274621026Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:20.274625877Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:20.274630472Z [err]      init_db()
+2026-06-01T04:17:20.274634604Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:20.274638731Z [err]      ~~~~~~~^^
+2026-06-01T04:17:20.274642959Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:20.274643894Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:20.274645148Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:20.274650146Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:20.274651704Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:20.274652248Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:20.274654531Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:20.274658989Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:20.274665215Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:20.275194564Z [err]          ^^^^^^^^
+2026-06-01T04:17:20.275198967Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:20.275205296Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:21.966308560Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:21.966315699Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:21.966320020Z [err]      run(
+2026-06-01T04:17:21.966323625Z [err]      ~~~^
+2026-06-01T04:17:21.966327507Z [err]          app,
+2026-06-01T04:17:21.966330182Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:21.966332832Z [err]          ^^^^
+2026-06-01T04:17:21.966337745Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:21.966338506Z [err]      ...<48 lines>...
+2026-06-01T04:17:21.966344338Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:21.966345282Z [err]      sys.exit(main())
+2026-06-01T04:17:21.966348817Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:21.966352626Z [err]               ~~~~^^
+2026-06-01T04:17:21.966354469Z [err]      )
+2026-06-01T04:17:21.966360446Z [err]      ^
+2026-06-01T04:17:21.966361370Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:21.966364918Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:21.966367356Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:21.966371773Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:21.966376207Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:21.966380080Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:21.966383649Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:21.966387573Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:21.966391403Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:21.966395343Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:21.967200004Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:21.967202106Z [err]      config.load_app()
+2026-06-01T04:17:21.967206262Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:21.967209559Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:21.967212746Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:21.967215396Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:21.967218510Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:21.967221402Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:21.967224316Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:21.967227322Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:21.967230290Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:21.967233132Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:21.967235873Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:21.967238938Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:21.967242368Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:21.967245415Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:21.967248109Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:21.967250967Z [err]      init_db()
+2026-06-01T04:17:21.967253728Z [err]      ~~~~~~~^^
+2026-06-01T04:17:21.967256597Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:21.967259505Z [err]      p = _db_path()
+2026-06-01T04:17:21.967883737Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:21.967887835Z [err]          ^^^^^^^^
+2026-06-01T04:17:21.967891710Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:23.639970147Z [err]          app,
+2026-06-01T04:17:23.639977347Z [err]          ^^^^
+2026-06-01T04:17:23.639980870Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:23.639983384Z [err]      ...<48 lines>...
+2026-06-01T04:17:23.639985773Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:23.639990596Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:23.639991244Z [err]      sys.exit(main())
+2026-06-01T04:17:23.639996655Z [err]               ~~~~^^
+2026-06-01T04:17:23.639997365Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:23.640002814Z [err]      )
+2026-06-01T04:17:23.640003576Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:23.640008067Z [err]      ^
+2026-06-01T04:17:23.640009893Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:23.640013982Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:23.640015935Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:23.640018839Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:23.640021419Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:23.640023980Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:23.640026761Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:23.640029774Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:23.640032336Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:23.640035032Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:23.640038094Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:23.640041965Z [err]      run(
+2026-06-01T04:17:23.640045010Z [err]      ~~~^
+2026-06-01T04:17:23.640973899Z [err]      config.load_app()
+2026-06-01T04:17:23.640981628Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:23.640986361Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:23.640990601Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:23.640993819Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:23.640998801Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:23.641003513Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:23.641008326Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:23.641012537Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:23.641016451Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:23.641020125Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:23.641023668Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:23.641028017Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:23.641031857Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:23.641035840Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:23.641041195Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:23.641043818Z [err]      init_db()
+2026-06-01T04:17:23.641048012Z [err]      ~~~~~~~^^
+2026-06-01T04:17:23.641052072Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:23.641056118Z [err]      p = _db_path()
+2026-06-01T04:17:23.641059169Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:23.641748866Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:23.641752021Z [err]          ^^^^^^^^
+2026-06-01T04:17:23.641754781Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:25.341641091Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:25.341643001Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:25.341648496Z [err]      )
+2026-06-01T04:17:25.341649309Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:25.341656251Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:25.341658563Z [err]      ^
+2026-06-01T04:17:25.341661543Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:25.341665462Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:25.341669273Z [err]      ~~~^
+2026-06-01T04:17:25.341669543Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:25.341673061Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:25.341678097Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:25.341678266Z [err]          app,
+2026-06-01T04:17:25.341683919Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:25.341685325Z [err]          ^^^^
+2026-06-01T04:17:25.341690536Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:25.341690686Z [err]      run(
+2026-06-01T04:17:25.341692680Z [err]      ...<48 lines>...
+2026-06-01T04:17:25.341695885Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:25.341698016Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:25.341701107Z [err]      sys.exit(main())
+2026-06-01T04:17:25.341704212Z [err]               ~~~~^^
+2026-06-01T04:17:25.341706178Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:25.341708810Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:25.341711769Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:25.342314501Z [err]      init_db()
+2026-06-01T04:17:25.342320781Z [err]      config.load_app()
+2026-06-01T04:17:25.342322863Z [err]      ~~~~~~~^^
+2026-06-01T04:17:25.342326655Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:25.342327828Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:25.342331991Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:25.342333536Z [err]      p = _db_path()
+2026-06-01T04:17:25.342338474Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:25.342338540Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:25.342342354Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:25.342345389Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:25.342349926Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:25.342352943Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:25.342355616Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:25.342358243Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:25.342360788Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:25.342364161Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:25.342366921Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:25.342369508Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:25.342372398Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:25.342376165Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:25.343319479Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:25.343323431Z [err]          ^^^^^^^^
+2026-06-01T04:17:25.343327082Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:27.012467381Z [err]      ~~~^
+2026-06-01T04:17:27.012474252Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:27.012475430Z [err]          app,
+2026-06-01T04:17:27.012481275Z [err]          ^^^^
+2026-06-01T04:17:27.012481485Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:27.012486669Z [err]      sys.exit(main())
+2026-06-01T04:17:27.012488800Z [err]      ...<48 lines>...
+2026-06-01T04:17:27.012493781Z [err]               ~~~~^^
+2026-06-01T04:17:27.012494355Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:27.012499466Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:27.012499695Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:27.012504438Z [err]      )
+2026-06-01T04:17:27.012505155Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:27.012509685Z [err]      ^
+2026-06-01T04:17:27.012512390Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:27.012515176Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:27.012517651Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:27.012520485Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:27.012523058Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:27.012525953Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:27.012528804Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:27.012531690Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:27.012534484Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:27.012537119Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:27.012540921Z [err]      run(
+2026-06-01T04:17:27.013002095Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:27.013007149Z [err]      p = _db_path()
+2026-06-01T04:17:27.013007713Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:27.013013783Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:27.013014335Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:27.013018459Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:27.013021906Z [err]      init_db()
+2026-06-01T04:17:27.013025193Z [err]      ~~~~~~~^^
+2026-06-01T04:17:27.013032610Z [err]      config.load_app()
+2026-06-01T04:17:27.013040707Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:27.013045389Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:27.013048816Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:27.013054696Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:27.013058652Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:27.013062755Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:27.013067389Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:27.013070885Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:27.013074692Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:27.013078524Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:27.013082842Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:27.013085995Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:27.013669202Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:27.013672304Z [err]          ^^^^^^^^
+2026-06-01T04:17:27.013679275Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:28.738890018Z [err]      ^
+2026-06-01T04:17:28.738898957Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:28.738899157Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:28.738900169Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:28.738904322Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:28.738908183Z [err]      run(
+2026-06-01T04:17:28.738909656Z [err]      sys.exit(main())
+2026-06-01T04:17:28.738914378Z [err]               ~~~~^^
+2026-06-01T04:17:28.738915358Z [err]      ~~~^
+2026-06-01T04:17:28.738919109Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:28.738920565Z [err]          app,
+2026-06-01T04:17:28.738923727Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:28.738925578Z [err]          ^^^^
+2026-06-01T04:17:28.738928329Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:28.738930944Z [err]      ...<48 lines>...
+2026-06-01T04:17:28.738933019Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:28.738935757Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:28.738938184Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:28.738942168Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:28.738944361Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:28.738949970Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:28.738951036Z [err]      )
+2026-06-01T04:17:28.738953824Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:28.738956600Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:28.738959485Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:28.739829092Z [err]      config.load_app()
+2026-06-01T04:17:28.739833449Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:28.739837299Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:28.739840773Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:28.739844188Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:28.739848029Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:28.739852073Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:28.739855201Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:28.739859013Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:28.739862140Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:28.739865147Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:28.739868239Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:28.739871486Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:28.739874666Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:28.739878116Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:28.739881723Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:28.739885262Z [err]      init_db()
+2026-06-01T04:17:28.739888396Z [err]      ~~~~~~~^^
+2026-06-01T04:17:28.739891436Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:28.739894916Z [err]      p = _db_path()
+2026-06-01T04:17:28.739897778Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:28.740855278Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:28.740857986Z [err]          ^^^^^^^^
+2026-06-01T04:17:28.740860846Z [err]  NameError: name 'BASE_DIR' is not defined
+2026-06-01T04:17:30.473004237Z [err]      run(
+2026-06-01T04:17:30.473010789Z [err]      ~~~^
+2026-06-01T04:17:30.473011469Z [err]  Traceback (most recent call last):
+2026-06-01T04:17:30.473015734Z [err]          app,
+2026-06-01T04:17:30.473017079Z [err]    File "/app/.venv/bin/uvicorn", line 6, in <module>
+2026-06-01T04:17:30.473020586Z [err]          ^^^^
+2026-06-01T04:17:30.473022663Z [err]      sys.exit(main())
+2026-06-01T04:17:30.473026542Z [err]      ...<48 lines>...
+2026-06-01T04:17:30.473029381Z [err]               ~~~~^^
+2026-06-01T04:17:30.473031246Z [err]          reset_contextvars=reset_contextvars,
+2026-06-01T04:17:30.473035325Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1524, in __call__
+2026-06-01T04:17:30.473038107Z [err]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:30.473040223Z [err]      return self.main(*args, **kwargs)
+2026-06-01T04:17:30.473042980Z [err]      )
+2026-06-01T04:17:30.473044948Z [err]             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:30.473049507Z [err]      ^
+2026-06-01T04:17:30.473049657Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1445, in main
+2026-06-01T04:17:30.473055418Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 609, in run
+2026-06-01T04:17:30.473055594Z [err]      rv = self.invoke(ctx)
+2026-06-01T04:17:30.473059451Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 1308, in invoke
+2026-06-01T04:17:30.473062700Z [err]      return ctx.invoke(self.callback, **ctx.params)
+2026-06-01T04:17:30.473066579Z [err]             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:30.473070148Z [err]    File "/app/.venv/lib/python3.13/site-packages/click/core.py", line 877, in invoke
+2026-06-01T04:17:30.473073831Z [err]      return callback(*args, **kwargs)
+2026-06-01T04:17:30.473077435Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/main.py", line 441, in main
+2026-06-01T04:17:30.473754323Z [err]    File "/app/backend/main.py", line 14, in <module>
+2026-06-01T04:17:30.473754467Z [err]      config.load_app()
+2026-06-01T04:17:30.473762578Z [err]      init_db()
+2026-06-01T04:17:30.473765327Z [err]      ~~~~~~~~~~~~~~~^^
+2026-06-01T04:17:30.473768060Z [err]      ~~~~~~~^^
+2026-06-01T04:17:30.473773587Z [err]    File "/app/backend/database.py", line 29, in init_db
+2026-06-01T04:17:30.473775318Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/config.py", line 415, in load_app
+2026-06-01T04:17:30.473778250Z [err]      p = _db_path()
+2026-06-01T04:17:30.473782724Z [err]      return import_from_string(self.app)
+2026-06-01T04:17:30.473784566Z [err]    File "/app/backend/database.py", line 15, in _db_path
+2026-06-01T04:17:30.473788171Z [err]    File "/app/.venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2026-06-01T04:17:30.473792627Z [err]      module = importlib.import_module(module_str)
+2026-06-01T04:17:30.473796431Z [err]    File "/mise/installs/python/3.13.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+2026-06-01T04:17:30.473800407Z [err]      return _bootstrap._gcd_import(name[level:], package, level)
+2026-06-01T04:17:30.473804243Z [err]             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-06-01T04:17:30.473808438Z [err]    File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+2026-06-01T04:17:30.473812468Z [err]    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2026-06-01T04:17:30.473816228Z [err]    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2026-06-01T04:17:30.473819999Z [err]    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2026-06-01T04:17:30.473823662Z [err]    File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+2026-06-01T04:17:30.473827135Z [err]    File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2026-06-01T04:17:30.474278764Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
+2026-06-01T04:17:30.474284769Z [err]          ^^^^^^^^
+2026-06-01T04:17:30.474288832Z [err]  NameError: name 'BASE_DIR' is not defined
