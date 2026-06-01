@@ -4,7 +4,7 @@
 
 const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3001/api'
-  : 'https://zephyr.proxy.rlwy.net/api';
+  : 'https://zensave-production.up.railway.app/api';
 
 // Inyectar keyframes de toast una sola vez
 if (!document.getElementById('zen-toast-styles')) {

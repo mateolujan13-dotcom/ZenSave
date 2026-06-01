@@ -539,3 +539,10 @@ zephyr.proxy.rlwy.net:38437
 2026-06-01T04:17:30.474278764Z [err]      p = BASE_DIR / 'data' / 'zensave.db'
 2026-06-01T04:17:30.474284769Z [err]          ^^^^^^^^
 2026-06-01T04:17:30.474288832Z [err]  NameError: name 'BASE_DIR' is not defined
+
+
+
+
+
+
+zensave-production.up.railway.app
