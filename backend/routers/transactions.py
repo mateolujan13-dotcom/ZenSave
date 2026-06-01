@@ -11,14 +11,19 @@ router = APIRouter()
 def get_summary(user_id: int = Depends(get_current_user)):
     db = get_db()
     try:
-        from datetime import datetime
+        from datetime import datetime, date, timedelta
         now = datetime.now()
-        current_month = now.strftime('%Y-%m')
+
+        month_start = date(now.year, now.month, 1).isoformat()
+        if now.month == 12:
+            month_end = date(now.year + 1, 1, 1).isoformat()
+        else:
+            month_end = date(now.year, now.month + 1, 1).isoformat()
 
         current_month_tx = db.execute('''
             SELECT type, SUM(amount) as total FROM transactions
-            WHERE user_id=? AND strftime('%Y-%m', date)=? GROUP BY type
-        ''', (user_id, current_month)).fetchall()
+            WHERE user_id=? AND date >= ? AND date < ? GROUP BY type
+        ''', (user_id, month_start, month_end)).fetchall()
 
         total_income = 0
         total_expense = 0
@@ -41,9 +46,9 @@ def get_summary(user_id: int = Depends(get_current_user)):
         by_category = db.execute('''
             SELECT c.name as category_name, c.icon, SUM(t.amount) as total
             FROM transactions t JOIN categories c ON t.category_id = c.id
-            WHERE t.user_id=? AND t.type='expense' AND strftime('%Y-%m', t.date)=?
+            WHERE t.user_id=? AND t.type='expense' AND t.date >= ? AND t.date < ?
             GROUP BY c.id ORDER BY total DESC
-        ''', (user_id, current_month)).fetchall()
+        ''', (user_id, month_start, month_end)).fetchall()
 
         by_category_list = [{
             'category_name': r['category_name'],
@@ -64,9 +69,9 @@ def get_summary(user_id: int = Depends(get_current_user)):
             SELECT description, SUM(amount) as amount, COUNT(*) as count
             FROM transactions
             WHERE user_id=? AND type='expense' AND amount < 500
-              AND description != '' AND strftime('%Y-%m', date)=?
+              AND description != '' AND date >= ? AND date < ?
             GROUP BY description HAVING COUNT(*) >= 3 ORDER BY amount DESC
-        ''', (user_id, current_month)).fetchall()
+        ''', (user_id, month_start, month_end)).fetchall()
 
         return {
             'success': True, 'data': {
@@ -105,8 +110,13 @@ def get_all(
             base += ' AND t.category_id=?'
             params.append(category_id)
         if month:
-            base += " AND strftime('%Y-%m', t.date)=?"
-            params.append(month)
+            base += " AND t.date >= ? AND t.date < ?"
+            params.append(f'{month}-01')
+            y, m = month.split('-')
+            if int(m) == 12:
+                params.append(f'{int(y)+1}-01-01')
+            else:
+                params.append(f'{y}-{int(m)+1:02d}-01')
         if search:
             base += ' AND t.description LIKE ?'
             params.append(f'%{search}%')

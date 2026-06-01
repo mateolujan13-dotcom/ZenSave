@@ -33,4 +33,5 @@ def init_db():
     else:
         with get_db() as conn:
             conn.execute('PRAGMA journal_mode = WAL')
+            conn.executescript(SCHEMA_PATH.read_text(encoding='utf-8'))
     _seed()

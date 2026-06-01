@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS saving_challenges (
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_date    ON transactions(date);
 CREATE INDEX IF NOT EXISTS idx_transactions_type    ON transactions(type);
+CREATE INDEX IF NOT EXISTS idx_tx_user_date         ON transactions(user_id, date);
 CREATE INDEX IF NOT EXISTS idx_saving_challenges_user_id ON saving_challenges(user_id);
 
 -- ═══════════════════════════════════════

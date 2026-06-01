@@ -1,17 +1,11 @@
-// ════════════════════════════════════════════════════════════
-// ZEN SAVE — Dashboard Analítico (MIS)
-// ════════════════════════════════════════════════════════════
-
 document.addEventListener('DOMContentLoaded', () => {
     window.checkAuth();
 
-    // Inyectar datos del usuario
     const user = JSON.parse(localStorage.getItem('zen_user'));
     if (user) {
         document.getElementById('user-name').textContent = user.name.split(' ')[0];
         document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
         
-        // Formatear mes actual para el título
         const now = new Date();
         const monthName = now.toLocaleString('es-ES', { month: 'long' });
         document.getElementById('current-month').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1) + ' ' + now.getFullYear();
@@ -19,25 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadSummary();
 
-    // Re-render charts when theme toggles
     const observer = new MutationObserver(() => {
         if (donutChart || barChart) loadSummary();
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 });
 
-// Variables globales para instancias de Chart.js
 let donutChart = null;
 let barChart = null;
 
-// Paleta de colores para gráficos (alineada con variables.css)
 const CHART_COLORS = [
-    '#00e676', // Primary Green
-    '#FFB4AB', // Expense Red
-    '#FFD54F', // Warning Amber
-    '#54e083', // Secondary Green
-    '#2e372e', // Surface Variant
-    '#ffba79', // Tertiary Container
+    '#00e676',
+    '#FFB4AB',
+    '#FFD54F',
+    '#54e083',
+    '#2e372e',
+    '#ffba79',
 ];
 
 function isLightMode() {
@@ -60,32 +51,35 @@ function chartColors() {
     };
 }
 
-/**
- * Carga los datos del endpoint /summary y actualiza toda la UI
- */
+function showSkeletons() {
+    document.querySelectorAll('.skeleton').forEach(el => el.style.display = 'block');
+    document.querySelectorAll('[id^="val-"]').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.card-subtitle').forEach(el => el.style.display = 'none');
+}
+
+function hideSkeletons() {
+    document.querySelectorAll('.skeleton').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('[id^="val-"]').forEach(el => el.style.display = '');
+    document.querySelectorAll('.card-subtitle').forEach(el => el.style.display = '');
+}
+
 async function loadSummary() {
+    showSkeletons();
+
     const res = await window.API.get('/transactions/summary');
     
     if (res.success) {
         const data = res.data;
-        const goal = data.monthly_goal || 0; // Viene actualizado del backend
+        const goal = data.monthly_goal || 0;
         
-        // 1. Actualizar Cards Superiores
+        hideSkeletons();
         updateCards(data);
-        
-        // 2. Renderizar Progreso de Meta
         renderProgress(data.total_expense, goal);
-        
-        // 3. Renderizar Gráfico de Dona (Categorías)
         renderDonutChart(data.by_category);
-        
-        // 4. Renderizar Gráfico de Barras (Tendencia 6 meses)
         renderBarChart(data.monthly_trend);
-        
-        // 5. Gastos Hormiga
         renderMicroExpenses(data.micro_expenses);
-
     } else {
+        hideSkeletons();
         console.error('Error loading summary:', res.error);
     }
 }
@@ -96,7 +90,6 @@ function updateCards(data) {
     document.getElementById('val-income').textContent = formatCurrency(data.total_income);
     document.getElementById('val-expense').textContent = formatCurrency(data.total_expense);
     
-    // Balance acumulado (all-time)
     const accum = data.accumulated_balance || data.balance;
     document.getElementById('val-balance').textContent = formatCurrency(accum);
     const balanceEl = document.getElementById('val-balance');
@@ -109,7 +102,6 @@ function updateCards(data) {
         balanceEl.classList.add('text-on-background');
     }
     
-    // Balance mensual (chiquito abajo)
     document.getElementById('val-monthly-balance').textContent = formatCurrency(data.balance);
     const mbEl = document.getElementById('val-monthly-balance');
     if (data.balance >= 0) {
@@ -120,7 +112,6 @@ function updateCards(data) {
         mbEl.classList.remove('text-primary');
     }
     
-    // Savings (retos de ahorro)
     document.getElementById('val-savings').textContent = formatCurrency(data.savings_total || 0);
 }
 
@@ -222,7 +213,6 @@ function renderBarChart(trendData) {
     }
 
     const labels = trendData.map(t => {
-        // Formatear mes YYYY-MM a "Ene 2026"
         const [y, m] = t.month.split('-');
         const date = new Date(y, m - 1);
         const name = date.toLocaleString('es-ES', { month: 'short' });
@@ -315,7 +305,6 @@ function renderMicroExpenses(microData) {
     listEl.innerHTML = '';
     
     microData.forEach((m, idx) => {
-        // Animación delay escalonada
         const delay = idx < 5 ? `delay-${idx+1}` : '';
         
         listEl.innerHTML += `

@@ -71,6 +71,33 @@
             border-radius: 0 4px 4px 0;
         }
         
+        /* Shimmer Loading Skeleton */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        .skeleton-text {
+            height: 14px;
+            width: 60%;
+            margin-bottom: 8px;
+        }
+        .skeleton-amount {
+            height: 32px;
+            width: 70%;
+            margin-bottom: 4px;
+        }
+        .skeleton-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
         /* Bar Chart Styles */
         .chart-bar {
             width: 24px;
@@ -229,8 +256,9 @@
 <span class="font-data-label text-data-label text-on-surface-variant uppercase">Ingresos del Mes</span>
 </div>
 <div>
-<div id="val-income" class="font-data-display text-data-display text-primary text-3xl font-bold tracking-tight mb-1">$0.00</div>
-<div class="text-sm text-on-surface-variant flex items-center gap-1">
+<div id="val-income" class="font-data-display text-data-display text-primary text-3xl font-bold tracking-tight mb-1" style="display:none"></div>
+<div class="skeleton skeleton-amount"></div>
+<div class="card-subtitle text-sm text-on-surface-variant flex items-center gap-1" style="display:none">
 <span class="material-symbols-outlined text-xs text-primary">trending_up</span>
 <span>+12% vs mes anterior</span>
 </div>
@@ -245,8 +273,9 @@
 <span class="font-data-label text-data-label text-on-surface-variant uppercase">Gastos del Mes</span>
 </div>
 <div>
-<div id="val-expense" class="font-data-display text-data-display text-expense-red text-3xl font-bold tracking-tight mb-1">$0.00</div>
-<div class="text-sm text-on-surface-variant flex items-center gap-1">
+<div id="val-expense" class="font-data-display text-data-display text-expense-red text-3xl font-bold tracking-tight mb-1" style="display:none"></div>
+<div class="skeleton skeleton-amount"></div>
+<div class="card-subtitle text-sm text-on-surface-variant flex items-center gap-1" style="display:none">
 <span class="material-symbols-outlined text-xs text-on-surface-variant">trending_flat</span>
 <span>Dentro del presupuesto</span>
 </div>
@@ -262,8 +291,9 @@
 <span class="font-data-label text-data-label text-on-surface-variant uppercase">Balance Acumulado</span>
 </div>
 <div class="relative z-10">
-<div id="val-balance" class="font-data-display text-data-display text-on-background text-4xl font-bold tracking-tight mb-1">$0.00</div>
-<div id="val-monthly" class="text-sm text-on-surface-variant flex items-center gap-1">
+<div id="val-balance" class="font-data-display text-data-display text-on-background text-4xl font-bold tracking-tight mb-1" style="display:none"></div>
+<div class="skeleton skeleton-amount"></div>
+<div id="val-monthly" class="card-subtitle text-sm text-on-surface-variant flex items-center gap-1" style="display:none">
 <span>Este mes: </span><span id="val-monthly-balance" class="font-semibold">$0.00</span>
 </div>
 </div>
@@ -277,8 +307,9 @@
 <span class="font-data-label text-data-label text-on-surface-variant uppercase">Mis Retos de Ahorro</span>
 </div>
 <div>
-<div id="val-savings" class="font-data-display text-data-display text-primary text-3xl font-bold tracking-tight mb-1">$0.00</div>
-<div class="text-sm text-on-surface-variant flex items-center gap-1">
+<div id="val-savings" class="font-data-display text-data-display text-primary text-3xl font-bold tracking-tight mb-1" style="display:none"></div>
+<div class="skeleton skeleton-amount"></div>
+<div class="card-subtitle text-sm text-on-surface-variant flex items-center gap-1" style="display:none">
 <span class="material-symbols-outlined text-xs text-primary">trending_up</span>
 <span>Ahorro acumulado</span>
 </div>
