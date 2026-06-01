@@ -1,12 +1,9 @@
-// ════════════════════════════════════════════════════════════
-// ZEN SAVE — API Service (Versión Final con Toasts & Retry)
-// ════════════════════════════════════════════════════════════
+// ── ZEN SAVE — Servicio API ──
 
 const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3001/api'
   : 'https://zensave-production.up.railway.app/api';
 
-// Inyectar keyframes de toast una sola vez
 if (!document.getElementById('zen-toast-styles')) {
     const s = document.createElement('style');
     s.id = 'zen-toast-styles';
@@ -14,9 +11,6 @@ if (!document.getElementById('zen-toast-styles')) {
     document.head.appendChild(s);
 }
 
-/**
- * Inyecta un sistema de Toasts (Notificaciones) en el DOM
- */
 function showToast(message, type = 'info') {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -37,7 +31,6 @@ function showToast(message, type = 'info') {
     
     container.appendChild(toast);
     
-    // Auto remover después de 4s
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(10px)';
@@ -46,9 +39,6 @@ function showToast(message, type = 'info') {
     }, 4000);
 }
 
-/**
- * Muestra/Oculta el spinner global en el header
- */
 function toggleLoading(show) {
     let spinner = document.getElementById('global-spinner');
     if (!spinner) {
@@ -68,9 +58,6 @@ function toggleLoading(show) {
 }
 
 window.API = {
-    /**
-     * Fetch con manejo centralizado, retries, JWT y Toasts
-     */
     async fetch(endpoint, options = {}, retries = 1) {
         const token = localStorage.getItem('zen_token');
         const headers = {
@@ -82,15 +69,11 @@ window.API = {
         toggleLoading(true);
 
         try {
-            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-                ...options,
-                headers
-            });
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, { ...options, headers });
 
             toggleLoading(false);
 
             if (response.status === 401) {
-                // Auth failure
                 localStorage.removeItem('zen_token');
                 localStorage.removeItem('zen_user');
                 showToast('Tu sesión ha expirado', 'error');
@@ -99,13 +82,9 @@ window.API = {
             }
 
             const data = await response.json();
-            
-            // Mostrar Toasts automáticos de error para mutaciones
+
             if (!data.success && data.error) {
                 if(options.method !== 'GET') showToast(data.error, 'error');
-            } else if (data.success && options.method && options.method !== 'GET') {
-                // Opcional: Descomentar para toasts de éxito automáticos
-                // showToast('Operación exitosa', 'success');
             }
 
             return data;
@@ -113,7 +92,6 @@ window.API = {
         } catch (error) {
             toggleLoading(false);
             
-            // Retry automático
             if (retries > 0) {
                 console.warn(`[ZEN API] Falla de red en ${endpoint}, reintentando...`);
                 return this.fetch(endpoint, options, retries - 1);
@@ -131,5 +109,4 @@ window.API = {
     delete(endpoint) { return this.fetch(endpoint, { method: 'DELETE' }); }
 };
 
-// Exponer toast para scripts globales
 window.showToast = showToast;

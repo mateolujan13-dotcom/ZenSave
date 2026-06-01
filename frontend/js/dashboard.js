@@ -1,3 +1,5 @@
+// ── ZEN SAVE — Dashboard ──
+
 document.addEventListener('DOMContentLoaded', () => {
     window.checkAuth();
 

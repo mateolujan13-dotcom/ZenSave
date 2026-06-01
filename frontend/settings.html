@@ -50,11 +50,11 @@
 </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen flex overflow-x-hidden">
-<!-- Atmospheric Background -->
+<!-- Fondo ambiental -->
 <div class="bg-orb w-[600px] h-[600px] bg-primary top-[-100px] left-[-100px]"></div>
 <div class="bg-orb w-[500px] h-[500px] bg-secondary bottom-[-100px] right-[-100px]"></div>
 
-<!-- Sidebar Desktop -->
+<!-- Sidebar escritorio -->
 <nav class="hidden md:flex flex-col bg-surface fixed left-0 top-0 h-full w-64 z-40 border-r border-border-subtle py-8">
     <a href="dashboard.html" class="px-6 mb-10 flex items-center gap-4">
         <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -103,27 +103,27 @@
     </div>
 </nav>
 
-<!-- Mobile Header -->
+<!-- Encabezado móvil -->
 <header class="md:hidden flex justify-between items-center px-margin-page py-4 w-full bg-background/80 backdrop-blur-xl fixed top-0 z-50 border-b border-border-subtle">
     <a href="dashboard.html" class="font-headline-md text-headline-md font-bold text-primary">Zen Save</a>
     <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
 </header>
 
-<!-- Main Content -->
+<!-- Contenido principal -->
 <main class="flex-1 md:ml-64 pt-24 md:pt-12 px-margin-page pb-24 md:pb-12 max-w-7xl mx-auto w-full">
     <div class="mb-8">
         <h2 class="font-headline-lg text-headline-lg text-on-surface">Ajustes</h2>
         <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">Gestiona tu santuario financiero.</p>
     </div>
 
-    <!-- Success message -->
+    <!-- Mensaje de éxito -->
     <div id="save-msg" class="hidden mb-6 bg-primary/10 border border-primary/30 text-primary p-4 rounded-xl font-body-md flex items-center gap-2">
         <span class="material-symbols-outlined">check_circle</span>
         <span>Perfil guardado correctamente.</span>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Perfil Card -->
+        <!-- Tarjeta de perfil -->
         <div class="lg:col-span-4 space-y-6">
             <div class="bg-surface rounded-[24px] border border-border-subtle p-card-padding hover-glow">
                 <div class="flex flex-col items-center text-center">
@@ -138,9 +138,9 @@
             </div>
         </div>
 
-        <!-- Forms -->
+        <!-- Formularios -->
         <div class="lg:col-span-8 space-y-8">
-            <!-- Financial Profile Form -->
+            <!-- Formulario de perfil financiero -->
             <div class="bg-surface rounded-[24px] border border-border-subtle p-card-padding hover-glow">
                 <h3 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary">person</span>
@@ -176,7 +176,7 @@
                 </form>
             </div>
 
-            <!-- Danger Zone -->
+            <!-- Zona de peligro -->
             <div class="bg-surface rounded-[24px] border border-error/20 p-card-padding">
                 <h3 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
                     <span class="material-symbols-outlined text-error">warning</span>
@@ -197,7 +197,7 @@
     </div>
 </main>
 
-<!-- Bottom Nav Mobile -->
+<!-- Navegación inferior móvil -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-md border-t border-border-subtle z-50 px-4 py-2 flex justify-between items-center">
     <a class="flex flex-col items-center p-2 text-on-surface-variant" href="dashboard.html">
         <span class="material-symbols-outlined">grid_view</span>

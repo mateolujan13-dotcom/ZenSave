@@ -46,7 +46,7 @@
             100% { transform: translate(-8vw, -3vh); }
         }
 
-        /* Input autofill fix for dark mode */
+        /* Corrección de autocompletado para modo oscuro */
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
         input:-webkit-autofill:focus, 
@@ -85,21 +85,19 @@
     </script>
 </head>
 <body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-margin-page">
-<!-- Atmospheric Orbs -->
+<!-- Orbes ambientales -->
 <div class="glow-orb top-[-10vh] left-[-10vw]"></div>
 <div class="glow-orb-2"></div>
-<!-- Header / Brand Anchor -->
+<!-- Encabezado / Marca -->
 <div class="mb-8 text-center z-10 flex flex-col items-center">
 <h1 class="font-headline-lg text-headline-lg text-primary drop-shadow-[0_0_15px_rgba(117,255,158,0.3)] tracking-tight">Zen Save</h1>
 <p class="font-body-md text-body-md text-on-surface-variant mt-2">Únete al Santuario</p>
 </div>
-<!-- Registration Form Card -->
+<!-- Tarjeta de registro -->
 <main class="w-full max-w-md bg-surface border border-border-subtle rounded-[24px] p-card-padding z-10 shadow-2xl backdrop-blur-sm relative group overflow-hidden">
-<!-- Hover Glow Effect on Card -->
 <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03)_0%,transparent_50%)] pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100"></div>
 <form id="register-form" class="flex flex-col gap-stack-gap relative z-10">
 <div id="register-error" class="hidden bg-error-container/20 border border-error/30 text-error p-3 rounded-lg text-sm mb-2"></div>
-<!-- Full Name Field -->
 <div class="flex flex-col gap-2">
 <label class="font-body-md text-body-md text-on-surface" for="fullName">Nombre Completo</label>
 <div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary/50 rounded-lg bg-surface-container transition-shadow duration-300">
@@ -107,7 +105,6 @@
 <input class="w-full bg-transparent border-none py-3 pl-10 pr-4 text-on-surface font-data-label text-data-label placeholder:text-on-surface-variant/50 focus:ring-0 rounded-lg outline-none" id="fullName" name="name" required placeholder="Tu nombre completo" type="text"/>
 </div>
 </div>
-<!-- Email Field -->
 <div class="flex flex-col gap-2">
 <label class="font-body-md text-body-md text-on-surface" for="email">Correo Electrónico</label>
 <div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary/50 rounded-lg bg-surface-container transition-shadow duration-300">
@@ -115,7 +112,6 @@
 <input class="w-full bg-transparent border-none py-3 pl-10 pr-4 text-on-surface font-data-label text-data-label placeholder:text-on-surface-variant/50 focus:ring-0 rounded-lg outline-none" id="email" name="email" required placeholder="ejemplo@correo.com" type="email"/>
 </div>
 </div>
-<!-- Password Field -->
 <div class="flex flex-col gap-2">
 <label class="font-body-md text-body-md text-on-surface" for="password">Contraseña</label>
 <div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary/50 rounded-lg bg-surface-container transition-shadow duration-300">
@@ -126,11 +122,9 @@
 </button>
 </div>
 </div>
-<!-- Action Button -->
 <button class="mt-4 w-full bg-primary-container text-on-primary-container font-headline-md text-body-md font-bold py-3 rounded-full shadow-[0_0_20px_rgba(0,230,118,0.2)] hover:shadow-[0_0_30px_rgba(0,230,118,0.4)] hover:bg-primary transition-all duration-300 active:scale-95" type="submit">
                 Crear Cuenta
             </button>
-<!-- Secondary Action -->
 <div class="mt-4 text-center">
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="index.html">
                     ¿Ya tienes una cuenta? <span class="text-on-surface border-b border-on-surface/30 hover:border-primary">Iniciar sesión</span>
@@ -139,7 +133,7 @@
 </form>
 </main>
 <script>
-        // Simple password toggle logic for the prototype
+        // Alternar visibilidad de contraseña
         const togglePassword = document.querySelector('button[type="button"] span.material-symbols-outlined[data-icon="visibility"]');
         const passwordInput = document.getElementById('password');
 
@@ -148,7 +142,6 @@
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
                 
-                // Toggle icon
                 if(type === 'password') {
                     togglePassword.textContent = 'visibility';
                     togglePassword.setAttribute('data-icon', 'visibility');

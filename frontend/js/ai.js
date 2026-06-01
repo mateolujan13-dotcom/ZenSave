@@ -1,20 +1,16 @@
-// ════════════════════════════════════════════════════════════
-// ZEN SAVE — Lógica del Asesor ZEN (IA)
-// ════════════════════════════════════════════════════════════
+// ── ZEN SAVE — Asesor ZEN (IA) ──
 
 let conversationHistory = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     window.checkAuth();
     
-    // Header UI
     const user = JSON.parse(localStorage.getItem('zen_user') || '{}');
     const userNameEl = document.getElementById('user-name');
     if (userNameEl && user.name) {
         userNameEl.textContent = user.name;
     }
 
-    // Inicializar chat con mensaje de bienvenida
     const displayName = user.name ? user.name.split(' ')[0] : 'usuario';
     conversationHistory.push({
         role: 'ai',
@@ -23,13 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     renderHistory();
 
-    // Eventos del chat
-    const chatForm = document.getElementById('chat-form');
-    if (chatForm) {
-        chatForm.addEventListener('submit', handleChatSubmit);
-    }
-
-    // Eventos de sugerencias rápidas
+    document.getElementById('chat-form')?.addEventListener('submit', handleChatSubmit);
     document.querySelectorAll('.suggestion-chip').forEach(chip => {
         chip.addEventListener('click', (e) => {
             const text = chip.childNodes[chip.childNodes.length - 1].textContent.trim();
@@ -37,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Eventos de Retos de Ahorro
     const newChallengeBtn = document.getElementById('btn-new-challenge');
     const challengeModal = document.getElementById('challenge-modal');
     if (newChallengeBtn && challengeModal) {
@@ -49,9 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadChallenges();
 });
 
-/**
- * Renderiza todo el historial de conversación en el DOM
- */
 function renderHistory() {
     const container = document.getElementById('chat-history');
     if (!container) return;
@@ -61,29 +47,18 @@ function renderHistory() {
         container.innerHTML += renderMessage(msg);
     });
 
-    // Auto-scroll al fondo
     container.scrollTop = container.scrollHeight;
 }
 
-/**
- * Simple Markdown Parser (Bold, Italics, Lists)
- */
 function parseMarkdown(text) {
     let html = text;
-    // Bold
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    // Italics
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    // Unordered Lists (basic)
     html = html.replace(/^- (.*)$/gm, '<li class="ml-4 list-disc">$1</li>');
-    // Newlines
     html = html.replace(/\n/g, '<br>');
     return html;
 }
 
-/**
- * Construye el HTML de una burbuja de chat
- */
 function renderMessage(msg) {
     const isUser = msg.role === 'user';
     
@@ -111,32 +86,21 @@ function renderMessage(msg) {
     }
 }
 
-
-/**
- * Maneja el envío del formulario del chat
- */
 function handleChatSubmit(e) {
     e.preventDefault();
     const input = document.getElementById('chat-input');
     const text = input.value.trim();
-    
     if (!text) return;
-    
     input.value = '';
     sendMessage(text);
 }
 
-/**
- * Agrega el mensaje del usuario y llama a la API de Gemini
- */
 async function sendMessage(text) {
     const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // 1. Mostrar mensaje del usuario
     conversationHistory.push({ role: 'user', text: text, time: timeNow });
     renderHistory();
 
-    // 2. Mostrar indicador de "Escribiendo..."
     const container = document.getElementById('chat-history');
     const typingId = 'typing-' + Date.now();
     container.innerHTML += `
@@ -153,22 +117,18 @@ async function sendMessage(text) {
     `;
     container.scrollTop = container.scrollHeight;
     
-    // Deshabilitar input
     const input = document.getElementById('chat-input');
     const btn = document.getElementById('btn-send');
     if (input) input.disabled = true;
     if (btn) btn.disabled = true;
 
-    // 3. Llamar a la API
     const res = await window.API.post('/ai/advice', { message: text });
     
-    // Restaurar UI
     if (input) input.disabled = false;
     if (btn) btn.disabled = false;
     const typingEl = document.getElementById(typingId);
     if (typingEl) typingEl.remove();
 
-    // 4. Mostrar respuesta
     if (res.success) {
         conversationHistory.push({
             role: 'ai',
@@ -187,9 +147,6 @@ async function sendMessage(text) {
     if (input) input.focus();
 }
 
-/**
- * Carga y renderiza los Retos de Ahorro
- */
 async function loadChallenges() {
     const listEl = document.getElementById('challenges-list');
     if (!listEl) return;
@@ -239,9 +196,6 @@ async function loadChallenges() {
     }
 }
 
-/**
- * Crea un nuevo reto de ahorro
- */
 async function handleCreateChallenge(e) {
     e.preventDefault();
     const form = e.target;
@@ -263,7 +217,6 @@ async function handleCreateChallenge(e) {
         form.reset();
         loadChallenges();
         
-        // El AI felicita
         conversationHistory.push({
             role: 'ai',
             text: `¡Excelente iniciativa! Acabo de registrar tu nuevo reto de ahorro: "${title}". Vamos a trabajar juntos para alcanzar esa meta.`,

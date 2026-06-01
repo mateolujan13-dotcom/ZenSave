@@ -10,7 +10,7 @@ __pycache__/
 # Dependencias (legacy Node.js)
 node_modules/
 
-# Variables de entorno (contiene secrets)
+# Variables de entorno (contiene secretos)
 .env
 backend/.env
 
@@ -19,17 +19,17 @@ backend/.env
 *.db-wal
 *.db-shm
 
-# Logs
+# Registros
 logs/
 *.log
 npm-debug.log*
 
-# OS
+# Sistema Operativo
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# IDE
+# Entorno de desarrollo
 .vscode/
 .idea/
 *.swp

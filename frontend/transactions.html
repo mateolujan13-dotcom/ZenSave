@@ -18,7 +18,7 @@
     .tx-list::-webkit-scrollbar { width: 6px; }
     .tx-list::-webkit-scrollbar-track { background: transparent; }
     .tx-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-    /* Modal overlay */
+    /* Superposición modal */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; }
     .modal-overlay.active { display: flex; }
     .light { --color-bg: #F0F4F0; }
@@ -57,7 +57,7 @@
 <div class="bg-orb orb-2"></div>
 
 <div class="flex h-screen overflow-hidden">
-    <!-- Sidebar Desktop -->
+    <!-- Sidebar escritorio -->
     <nav class="hidden md:flex flex-col bg-surface fixed left-0 top-0 h-full w-64 z-40 border-r border-border-subtle py-8">
         <a href="dashboard.html" class="px-6 mb-10 flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -106,9 +106,9 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Contenido principal -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative md:ml-64">
-        <!-- Header -->
+        <!-- Encabezado -->
         <header class="flex justify-between items-center px-gutter h-16 w-full z-50 bg-background/80 backdrop-blur-xl shrink-0 border-b border-border-subtle">
             <div class="md:hidden flex items-center">
                 <a href="dashboard.html" class="font-headline-md text-headline-md text-primary tracking-tight">Zen Save</a>
@@ -124,7 +124,7 @@
             </div>
         </header>
 
-        <!-- Scroll Area -->
+        <!-- Área de scroll -->
         <div class="flex-1 overflow-y-auto overflow-x-hidden p-margin-page tx-list">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -144,14 +144,14 @@
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-stack-gap items-start">
-                    <!-- Lista Transacciones -->
+                    <!-- Lista de transacciones -->
                     <div class="flex-1 w-full">
                         <div id="transactions-list" class="space-y-3">
                             <div class="p-8 text-center text-on-surface-variant font-data-label text-data-label">Cargando movimientos...</div>
                         </div>
                     </div>
 
-                    <!-- Panel Nuevo Movimiento (Desktop) -->
+                    <!-- Panel nuevo movimiento (escritorio) -->
                     <div class="hidden lg:block w-full lg:w-[360px] shrink-0 sticky top-0">
                         <div class="bg-surface border border-border-subtle rounded-[24px] p-6 shadow-[0_0_40px_rgba(0,0,0,0.3)] relative overflow-hidden group hover-glow transition-all duration-500">
                             <div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-[50px] group-hover:bg-primary/20 transition-all duration-500"></div>
@@ -189,7 +189,7 @@
                                         <input name="date" id="tx-date" class="w-full bg-surface-container-low border border-border-subtle rounded-[16px] py-3 px-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary/50 transition-all [color-scheme:dark]" type="date"/>
                                     </div>
                                 </div>
-                                <!-- Submit -->
+                                <!-- Enviar -->
                                 <button type="submit" class="w-full mt-2 bg-primary text-on-primary font-headline-md text-body-lg py-4 rounded-[16px] shadow-[0_0_20px_rgba(117,255,158,0.2)] hover:shadow-[0_0_30px_rgba(117,255,158,0.4)] hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined">add_circle</span>
                                     Registrar Movimiento
@@ -207,7 +207,7 @@
     </main>
 </div>
 
-<!-- Modal Móvil -->
+<!-- Modal móvil -->
 <div id="tx-modal" class="modal-overlay">
     <div class="bg-surface border border-border-subtle rounded-[24px] p-6 w-full max-w-md mx-4 relative max-h-[90vh] overflow-y-auto">
         <button id="btn-close-modal" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors z-10">
@@ -254,7 +254,7 @@
     </div>
 </div>
 
-<!-- Bottom Nav Mobile -->
+<!-- Navegación inferior móvil -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-md border-t border-border-subtle z-50 px-4 py-2 flex justify-between items-center">
     <a class="flex flex-col items-center p-2 text-on-surface-variant" href="dashboard.html">
         <span class="material-symbols-outlined">grid_view</span>

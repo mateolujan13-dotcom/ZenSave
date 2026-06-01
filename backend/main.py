@@ -9,7 +9,7 @@ from backend.logger import logger
 from backend.routers import auth, transactions, categories, ai
 
 load_dotenv()     # busca .env en la raíz primero
-load_dotenv('backend/.env', override=False)  # fallback
+load_dotenv('backend/.env', override=False)  # respaldo
 
 init_db()
 

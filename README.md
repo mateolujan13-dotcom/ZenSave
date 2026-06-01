@@ -1,12 +1,112 @@
-# 🌿 ZEN SAVE — Financial Sanctuary
+# Zen Save — Santuario Financiero
 
-ZEN SAVE es una plataforma web innovadora de organización financiera personal diseñada con una estética premium oscura y un **Asesor con Inteligencia Artificial integrado (Google Gemini)**.
-
-Desarrollado como proyecto académico para la **Tecnicatura en Desarrollo de Software** por el equipo **IRONDEV'S**.
+Plataforma web de organización financiera personal con asesoría inteligente potenciada por **Google Gemini IA**. Diseñada con estética premium, modo oscuro y experiencia de usuario fluida.
 
 ---
 
-## 👥 Equipo IRONDEV'S
+## Features
+
+- **Autenticación segura** — JWT con cifrado de contraseñas (PBKDF2 + bcrypt legacy)
+- **Dashboard interactivo** — Resumen mensual, métricas en tiempo real, gráficos dinámicos (Chart.js) y detección de gastos hormiga
+- **Gestión de transacciones** — Altas, bajas, modificaciones, filtros por tipo/mes y búsqueda
+- **Asesor ZEN (IA)** — Chat contextual integrado con Gemini 2.5 Flash que analiza tu perfil financiero y brinda recomendaciones personalizadas
+- **Retos de ahorro** — Creación y seguimiento de metas financieras con depósitos parciales
+- **Presupuesto mensual** — Barra de progreso visual con alertas de consumo
+- **Modo oscuro/claro** — Toggle persistente con detección de preferencias
+- **Responsive** — Sidebar desktop + navegación inferior móvil
+- **Toast notifications** — Feedback visual no intrusivo
+
+---
+
+## Stack
+
+| Capa | Tecnología |
+|------|-----------|
+| Backend | Python 3, FastAPI, Uvicorn |
+| Base de datos | SQLite (WAL mode) |
+| Frontend | HTML5, Vanilla JS, CSS puro (Flexbox/Grid, variables nativas) |
+| Gráficos | Chart.js vía CDN |
+| IA | Google Gemini API (`google-genai`) |
+| Autenticación | JWT + PBKDF2 |
+
+---
+
+## Instalación
+
+### Requisitos
+- Python 3.10+
+- Git
+
+### Pasos
+
+```bash
+# 1. Clonar
+git clone https://github.com/mateolujan13-dotcom/ZenSave.git
+cd ZenSave
+
+# 2. Instalar dependencias
+pip install -r requirements.txt
+
+# 3. Configurar variables de entorno
+cp backend/.env.example backend/.env
+# Editar backend/.env con:
+#   JWT_SECRET=tu_clave_secreta
+#   GEMINI_API_KEY=tu_api_key_de_gemini
+
+# 4. Iniciar servidor
+python -m uvicorn backend.main:app --reload --port 3001
+
+# 5. Abrir en navegador
+# http://localhost:3001
+```
+
+> La base de datos se inicializa automáticamente al primer inicio.  
+> Usuario de prueba: `test@zensave.com` / contraseña: consultar al equipo.
+
+---
+
+## API Endpoints
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | `/api/auth/register` | Registro de usuario |
+| POST | `/api/auth/login` | Inicio de sesión |
+| GET | `/api/auth/profile` | Perfil del usuario |
+| PUT | `/api/auth/profile` | Actualizar perfil |
+| GET | `/api/transactions/summary` | Resumen financiero del mes |
+| GET | `/api/transactions` | Listar transacciones (filtros) |
+| POST | `/api/transactions` | Crear transacción |
+| PUT | `/api/transactions/{id}` | Actualizar transacción |
+| DELETE | `/api/transactions/{id}` | Eliminar transacción |
+| GET | `/api/categories` | Listar categorías |
+| POST | `/api/ai/advice` | Consultar al Asesor ZEN |
+| POST | `/api/ai/challenges` | Crear reto de ahorro |
+| GET | `/api/ai/challenges` | Listar retos activos |
+| PATCH | `/api/ai/challenges/{id}/deposit` | Depositar en reto |
+| GET | `/api/health` | Health check |
+
+---
+
+## Despliegue
+
+### Railway
+El proyecto incluye `Procfile` y `requirements.txt` para deploy directo:
+
+```bash
+# Variables requeridas en Railway
+JWT_SECRET=<tu_secreto>
+GEMINI_API_KEY=<tu_api_key>
+```
+
+### Vercel (frontend estático)
+El frontend puede servirse desde Vercel apuntando al backend en Railway. Ver `vercel.txt`.
+
+---
+
+## Equipo
+
+**IRONDEV'S** — Proyecto académico · Tecnicatura en Desarrollo de Software
+
 - Alejandro Díaz
 - Leonardo Milow
 - Josué Aguirre
@@ -15,61 +115,4 @@ Desarrollado como proyecto académico para la **Tecnicatura en Desarrollo de Sof
 
 ---
 
-## 🚀 Características Principales
-
-1. **Gestión de Sesión Segura**: Autenticación JWT con cifrado de contraseñas (PBKDF2 + bcrypt legacy).
-2. **TPS (Transactions)**: Registro y filtrado de ingresos y gastos al instante.
-3. **MIS (Dashboard)**: Resumen mensual, progreso de presupuesto, gráficos dinámicos con Chart.js y detección inteligente de "Gastos Hormiga".
-4. **DSS (Asesor ZEN)**: Un chat interactivo integrado con IA (Gemini 2.5 Flash) capaz de leer el contexto financiero local del usuario y proveer recomendaciones personalizadas en tiempo real.
-5. **Retos de Ahorro**: Creación y seguimiento de metas financieras.
-6. **Diseño Premium**: Dark Theme completo, sin librerías externas voluminosas (solo CSS puro en tokens), animaciones suaves, layouts responsivos y notificaciones Toast nativas.
-
----
-
-## 🛠️ Stack Tecnológico
-
-- **Backend**: Python 3, FastAPI, Uvicorn
-- **Base de Datos**: SQLite (modo WAL para concurrencia)
-- **Frontend**: HTML5, Vanilla JavaScript (con arquitectura basada en fetch API) y CSS Puro (Variables nativas, Flexbox/Grid)
-- **Gráficos**: Chart.js (vía CDN)
-- **Inteligencia Artificial**: Google Gemini REST API (`google-genai`)
-
----
-
-## ⚙️ Instalación en 5 Pasos
-
-1. **Clonar / Descomprimir el repositorio**
-   Abrí tu terminal en la carpeta raíz del proyecto.
-
-2. **Instalar Dependencias**
-   Asegurate de tener Python 3.10+ instalado y ejecutá:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configurar Entorno**
-   Renombrá el archivo `backend/.env.example` a `backend/.env` (si aún no lo has hecho) y asegúrate de configurar tu clave de Gemini:
-   ```env
-   JWT_SECRET=zensave_irondevs_jwt_secret_2026_dev
-   GEMINI_API_KEY=tu_clave_aqui
-   ```
-
-4. **Iniciar el Servidor Backend**
-   ```bash
-   python -m uvicorn backend.main:app --reload --port 3001
-   ```
-   *(Verás en consola que el servidor corre en el puerto 3001 y la base de datos se inicializa sola).*
-
-5. **Abrir el Frontend**
-   No es necesario un servidor frontend complejo. Simplemente da doble clic en el archivo `frontend/index.html` en tu explorador de archivos para abrirlo en el navegador.
-
----
-
-## 📸 Módulos de la Aplicación
-
-- **Pantalla de Acceso (Login)**: Efecto Glassmorphism, animaciones fade-in y validación visual.
-- **Dashboard (MIS)**: Gráficos de barra, donas de categorías y listado de gastos hormiga.
-- **Transacciones**: Listado transaccional con filtros dinámicos (Mes/Tipo) y un *Floating Action Button*.
-- **Asesor ZEN**: Interfaz moderna simulando un consultor humano experto.
-
-> **ZEN SAVE 2026** - Proyecto académico de excelencia diseñado y codificado por IRONDEV'S.
+<p align="center">Zen Save 2026 — Santuario Financiero</p>

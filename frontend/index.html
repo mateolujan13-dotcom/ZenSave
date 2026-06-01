@@ -52,12 +52,12 @@
 </script>
 </head>
 <body class="bg-background text-on-background min-h-screen flex items-center justify-center relative overflow-hidden font-body-md text-body-md">
-<!-- Atmospheric Orbs -->
+<!-- Orbes ambientales -->
 <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
 <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
 <main class="w-full max-w-[420px] px-margin-page z-10 flex flex-col items-center">
-    <!-- Brand Centerpiece -->
+    <!-- Centro de marca -->
     <div class="flex flex-col items-center mb-10">
         <div class="relative mb-4">
             <div class="absolute inset-0 bg-primary/30 blur-2xl rounded-full"></div>
@@ -67,7 +67,7 @@
         <p class="font-data-label text-data-label text-on-surface-variant uppercase tracking-widest mt-1">Santuario Financiero</p>
     </div>
 
-    <!-- Login Form Card -->
+    <!-- Tarjeta de inicio de sesión -->
     <div class="w-full bg-surface border border-border-subtle rounded-[24px] p-card-padding relative group overflow-hidden shadow-2xl">
         <div class="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
         <div class="text-center mb-8 relative z-10">
@@ -78,7 +78,6 @@
         <form id="login-form" class="flex flex-col gap-stack-gap relative z-10">
             <div id="login-error" class="hidden bg-error-container/20 border border-error/30 text-error p-3 rounded-lg text-sm mb-2"></div>
 
-            <!-- Email -->
             <div class="flex flex-col gap-2">
                 <label class="font-data-label text-data-label text-on-surface-variant uppercase ml-1" for="login-email">Correo Electrónico</label>
                 <div class="relative group/input">
@@ -87,7 +86,6 @@
                 </div>
             </div>
 
-            <!-- Password -->
             <div class="flex flex-col gap-2 mt-2">
                 <label class="font-data-label text-data-label text-on-surface-variant uppercase ml-1" for="login-password">Contraseña</label>
                 <div class="relative group/input">
@@ -96,14 +94,12 @@
                 </div>
             </div>
 
-            <!-- CTA -->
             <button class="w-full bg-primary-container text-on-primary-container rounded-full py-4 mt-6 font-body-md text-body-md font-bold hover:brightness-110 shadow-[0_0_20px_rgba(0,230,118,0.2)] hover:shadow-[0_0_30px_rgba(0,230,118,0.4)] transition-all duration-300 flex items-center justify-center gap-2" type="submit">
                 <span>Entrar al Santuario</span>
                 <span class="material-symbols-outlined text-xl">arrow_forward</span>
             </button>
         </form>
 
-        <!-- Link registro -->
         <div class="mt-8 text-center relative z-10">
             <span class="font-body-md text-body-md text-on-surface-variant">¿No tienes una cuenta?</span>
             <a class="font-body-md text-body-md text-primary ml-1 hover:underline underline-offset-4 transition-all" href="signup.html">Crear una cuenta</a>

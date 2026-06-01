@@ -26,7 +26,7 @@
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in-up { animation: fadeInUp 0.4s ease both; }
-    /* Challenge modal */
+    /* Modal de retos */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; }
     .modal-overlay.active { display: flex; }
     .light { --color-bg: #F0F4F0; }
@@ -66,7 +66,7 @@
 <div class="bg-orb orb-2"></div>
 
 <div class="flex h-screen overflow-hidden">
-    <!-- Desktop Side Nav -->
+    <!-- Sidebar escritorio -->
     <nav class="hidden md:flex flex-col bg-surface fixed left-0 top-0 h-full w-64 z-40 border-r border-border-subtle py-8">
         <a href="dashboard.html" class="px-6 mb-10 flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -115,9 +115,9 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Contenido principal -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative md:ml-64">
-        <!-- Header (same as transactions/dashboard) -->
+        <!-- Encabezado -->
         <header class="flex justify-between items-center px-gutter h-16 w-full z-50 bg-background/80 backdrop-blur-xl shrink-0 border-b border-border-subtle">
             <div class="md:hidden flex items-center">
                 <a href="dashboard.html" class="font-headline-md text-headline-md text-primary tracking-tight">Zen Save</a>
@@ -130,11 +130,11 @@
             </div>
         </header>
 
-        <!-- Chat + Challenges Row -->
+        <!-- Chat y retos -->
         <div class="flex-1 flex overflow-hidden">
-            <!-- Chat Area -->
+            <!-- Área de chat -->
             <div class="flex-1 flex flex-col overflow-hidden px-gutter md:px-margin-page py-6">
-                <!-- Heading -->
+                <!-- Título -->
                 <div class="mb-6 shrink-0">
                     <div>
                         <h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Asesoría <span class="text-primary">Zen</span></h2>
@@ -142,10 +142,10 @@
                     </div>
                 </div>
 
-                <!-- Messages -->
+                <!-- Mensajes -->
                 <div id="chat-history" class="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-4 pr-2 pb-4"></div>
 
-                <!-- Input Area (sticky bottom) -->
+                <!-- Área de input -->
                 <div class="shrink-0 pt-4 border-t border-border-subtle">
                     <!-- Chips de sugerencias -->
                     <div class="flex gap-2 overflow-x-auto custom-scrollbar pb-3 mb-2">
@@ -162,7 +162,7 @@
                             Sugerir un nuevo reto
                         </button>
                     </div>
-                    <!-- Input Box -->
+                    <!-- Caja de texto -->
                     <form id="chat-form" class="relative flex items-center">
                         <input id="chat-input" class="w-full bg-surface border border-outline-variant rounded-full py-4 pl-6 pr-14 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant font-body-md text-body-md" placeholder="Escribe tu consulta financiera..." type="text"/>
                         <button id="btn-send" type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center hover:shadow-[0_0_15px_rgba(0,230,118,0.4)] transition-all">
@@ -172,7 +172,7 @@
                 </div>
             </div>
 
-            <!-- Right Sidebar: Challenges -->
+            <!-- Sidebar derecho: retos -->
             <aside class="flex flex-col w-64 bg-surface/30 border-l border-border-subtle h-full p-4 shrink-0">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="font-headline-md text-base text-on-surface">Retos Activos</h3>
@@ -190,7 +190,7 @@
     </main>
 </div>
 
-<!-- Deposit Modal -->
+<!-- Modal de depósito -->
 <div id="deposit-modal" class="modal-overlay">
     <div class="bg-surface border border-border-subtle rounded-[24px] p-6 w-full max-w-sm mx-4 relative">
         <button onclick="closeDepositModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors">
@@ -207,7 +207,7 @@
     </div>
 </div>
 
-<!-- Challenge Modal -->
+<!-- Modal de reto -->
 <div id="challenge-modal" class="modal-overlay">
     <div class="bg-surface border border-border-subtle rounded-[24px] p-6 w-full max-w-sm mx-4 relative">
         <button id="btn-close-challenge" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors">
@@ -231,7 +231,7 @@
     </div>
 </div>
 
-<!-- Bottom Nav Mobile -->
+<!-- Navegación inferior móvil -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-md border-t border-border-subtle z-50 px-4 py-2 flex justify-between items-center">
     <a class="flex flex-col items-center p-2 text-on-surface-variant" href="dashboard.html">
         <span class="material-symbols-outlined">grid_view</span>

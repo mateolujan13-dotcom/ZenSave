@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Zen Save - Santuario Digital</title>
-<!-- Fonts & Icons -->
+<!-- Fuentes e íconos -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;display=block" rel="stylesheet"/>
@@ -19,7 +19,7 @@
             overflow-x: hidden;
         }
 
-        /* Atmospheric Orbs */
+        /* Orbes ambientales */
         .ambient-orb {
             position: fixed;
             border-radius: 50%;
@@ -31,7 +31,7 @@
         .orb-1 { top: -10%; left: 20%; width: 500px; height: 500px; background-color: #75ff9e; }
         .orb-2 { bottom: -20%; right: 10%; width: 600px; height: 600px; background-color: #54e083; }
 
-        /* Card Hover Glow */
+        /* Brillo hover en tarjetas */
         .glass-card {
             background-color: #1A1A1A;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -52,12 +52,12 @@
             opacity: 1;
         }
 
-        /* Neon Button Glow */
+        /* Brillo neón en botones */
         .neon-btn-glow {
             box-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
         }
         
-        /* Progress Bar Animation */
+        /* Animación de barra de progreso */
         .progress-fill {
             transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -71,7 +71,7 @@
             border-radius: 0 4px 4px 0;
         }
         
-        /* Shimmer Loading Skeleton */
+        /* Esqueleto de carga shimmer */
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
@@ -98,14 +98,14 @@
             border-radius: 50%;
         }
         
-        /* Bar Chart Styles */
+        /* Estilos de gráfico de barras */
         .chart-bar {
             width: 24px;
             border-radius: 4px 4px 0 0;
             transition: height 0.5s ease;
         }
         
-        /* Donut Chart Approximation via conic-gradient */
+        /* Aproximación de gráfico donut con conic-gradient */
         .donut-chart {
             background: conic-gradient(
                 #00e676 0% 35%, 
@@ -170,10 +170,10 @@
     </script>
 </head>
 <body class="font-body-md text-body-md antialiased min-h-screen flex relative">
-<!-- Atmospheric Background Orbs -->
+<!-- Orbes de fondo ambiental -->
 <div class="ambient-orb orb-1"></div>
 <div class="ambient-orb orb-2"></div>
-<!-- SideNavBar (Shared Component) -->
+<!-- Sidebar (componente compartido) -->
 <nav class="hidden md:flex flex-col bg-surface fixed left-0 top-0 h-full w-64 z-40 border-r border-border-subtle py-8">
     <a href="dashboard.html" class="px-6 mb-10 flex items-center gap-4">
         <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -221,9 +221,9 @@
         </button>
     </div>
 </nav>
-<!-- Main Content Canvas -->
+<!-- Lienzo de contenido principal -->
 <main class="flex-1 md:ml-64 relative z-10 p-gutter md:p-margin-page pb-24 md:pb-margin-page mt-16 md:mt-0">
-<!-- TopAppBar (Shared Component for Mobile/Responsive context, but rendered as top header here per layout) -->
+<!-- Barra superior móvil -->
 <header class="bg-background/80 backdrop-blur-xl text-primary dark:text-primary font-headline-md text-headline-md fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] z-50 bg-transparent flex justify-between items-center px-gutter py-4 transition-opacity duration-300 md:hidden border-b border-border-subtle shadow-[none]">
 <a href="dashboard.html" class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Zen Save</a>
 <div class="flex items-center gap-4">
@@ -238,16 +238,16 @@
 </div>
 </div>
 </header>
-<!-- Canvas Content -->
+<!-- Contenido del lienzo -->
 <div class="max-w-6xl mx-auto space-y-8 mt-8 md:mt-4">
-<!-- Greeting -->
+<!-- Saludo -->
 <section>
 <h2 class="font-headline-lg text-headline-lg text-on-background tracking-tight">Resumen de <span id="current-month" class="text-primary">...</span></h2>
 <p class="text-on-surface-variant mt-1">Hola de nuevo, <span id="user-name" class="font-bold text-on-surface">Usuario</span>. Aquí está el flujo de tu energía financiera.</p>
 </section>
-<!-- Top Section: Metric Cards Bento -->
+<!-- Tarjetas de métricas -->
 <section class="grid grid-cols-1 md:grid-cols-4 gap-stack-gap">
-<!-- Card 1: Ingresos -->
+<!-- Tarjeta 1: Ingresos -->
 <div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between">
 <div class="flex justify-between items-start mb-4">
 <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -264,7 +264,7 @@
 </div>
 </div>
 </div>
-<!-- Card 2: Gastos -->
+<!-- Tarjeta 2: Gastos -->
 <div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between">
 <div class="flex justify-between items-start mb-4">
 <div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center">
@@ -281,7 +281,7 @@
 </div>
 </div>
 </div>
-<!-- Card 3: Balance -->
+<!-- Tarjeta 3: Balance -->
 <div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between relative overflow-hidden" style="box-shadow: 0 4px 30px rgba(117, 255, 158, 0.05);">
 <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
 <div class="flex justify-between items-start mb-4 relative z-10">
@@ -298,7 +298,7 @@
 </div>
 </div>
 </div>
-<!-- Card 4: Savings -->
+<!-- Tarjeta 4: Ahorros -->
 <div class="glass-card rounded-3xl p-card-padding flex flex-col justify-between">
 <div class="flex justify-between items-start mb-4">
 <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -316,9 +316,9 @@
 </div>
 </div>
 </section>
-<!-- Central Section: Charts & Progress -->
+<!-- Sección central: gráficos y progreso -->
 <section class="grid grid-cols-1 lg:grid-cols-3 gap-stack-gap">
-<!-- Main Bar Chart (2 columns) -->
+<!-- Gráfico de barras principal (2 col) -->
 <div class="glass-card rounded-3xl p-card-padding lg:col-span-2 flex flex-col">
 <div class="flex justify-between items-center mb-6">
 <h3 class="font-headline-md text-headline-md text-on-background text-xl">Flujo de 6 Meses</h3>
@@ -331,16 +331,16 @@
 <canvas id="bar-chart"></canvas>
 </div>
 </div>
-<!-- Donut Chart & Progress (1 column) -->
+<!-- Gráfico donut y progreso (1 col) -->
 <div class="flex flex-col gap-stack-gap">
-<!-- Donut Chart -->
+<!-- Gráfico donut -->
 <div class="glass-card rounded-3xl p-card-padding flex-1 flex flex-col items-center justify-center">
 <h3 class="font-headline-md text-headline-md text-on-background text-lg w-full text-left mb-4">Distribución</h3>
 <div class="flex-1 min-h-[150px] relative w-full flex items-center justify-center" id="donut-container">
 <canvas id="donut-chart"></canvas>
 </div>
 </div>
-<!-- Budget Progress -->
+<!-- Progreso de presupuesto -->
 <div class="glass-card rounded-3xl p-card-padding">
 <div class="flex justify-between items-end mb-2">
 <span class="font-data-label text-data-label text-on-surface-variant uppercase">Presupuesto Mensual</span>
@@ -355,9 +355,9 @@
 </div>
 </div>
 </section>
-<!-- Bottom Section -->
+<!-- Sección inferior -->
 <section class="grid grid-cols-1 lg:grid-cols-2 gap-stack-gap">
-<!-- Gastos Hormiga -->
+<!-- Gastos hormiga -->
 <div class="glass-card rounded-3xl p-card-padding">
 <div class="flex justify-between items-center mb-6">
 <h3 class="font-headline-md text-headline-md text-on-background text-xl">Gastos Hormiga</h3>
@@ -369,7 +369,7 @@
 <li class="p-4 bg-background/50 rounded-xl animate-pulse h-16"></li>
 </ul>
 </div>
-<!-- Interactive Banner CTA -->
+<!-- Banner CTA interactivo -->
 <div class="glass-card rounded-3xl p-card-padding flex flex-col justify-center items-center text-center relative overflow-hidden bg-gradient-to-br from-surface to-surface-container-low border border-primary/20">
 <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50"></div>
 <div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-6 relative z-10 border border-primary/30 shadow-[0_0_20px_rgba(117,255,158,0.2)]">
@@ -385,7 +385,7 @@
 </section>
 </div>
 </main>
-<!-- Bottom Nav for Mobile (Derived from SideNav context) -->
+<!-- Navegación inferior móvil -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-md border-t border-border-subtle z-50 px-4 py-2 flex justify-between items-center">
     <a class="flex flex-col items-center p-2 text-primary" href="dashboard.html">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
@@ -404,9 +404,7 @@
     </a>
 </nav>
 <script>
-        // Micro-interactions and subtle effects
         document.addEventListener('DOMContentLoaded', () => {
-            // Animate progress bar on load
             setTimeout(() => {
                 const progressBars = document.querySelectorAll('.progress-fill');
                 progressBars.forEach(bar => {
@@ -418,7 +416,6 @@
                 });
             }, 300);
 
-            // Simple parallax for background orbs to make them feel alive
             document.addEventListener('mousemove', (e) => {
                 const orbs = document.querySelectorAll('.ambient-orb');
                 const mouseX = e.clientX / window.innerWidth;

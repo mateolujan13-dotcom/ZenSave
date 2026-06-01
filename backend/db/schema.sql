@@ -1,12 +1,7 @@
--- ════════════════════════════════════════════════════════════
 -- ZEN SAVE — Schema de Base de Datos (SQLite)
 -- Ejecutado automáticamente por database.js si las tablas no existen.
--- ════════════════════════════════════════════════════════════
 
--- ─────────────────────────────────────
 -- Tabla: users
--- Almacena las cuentas de usuario.
--- ─────────────────────────────────────
 CREATE TABLE IF NOT EXISTS users (
     id            INTEGER PRIMARY KEY AUTOINCREMENT,
     name          TEXT    NOT NULL,
@@ -17,10 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at    TEXT    DEFAULT (datetime('now'))
 );
 
--- ─────────────────────────────────────
 -- Tabla: categories
--- Categorías predefinidas para clasificar transacciones.
--- ─────────────────────────────────────
 CREATE TABLE IF NOT EXISTS categories (
     id    INTEGER PRIMARY KEY AUTOINCREMENT,
     name  TEXT    NOT NULL,
@@ -28,10 +20,7 @@ CREATE TABLE IF NOT EXISTS categories (
     icon  TEXT
 );
 
--- ─────────────────────────────────────
 -- Tabla: transactions
--- Registro de ingresos y egresos del usuario.
--- ─────────────────────────────────────
 CREATE TABLE IF NOT EXISTS transactions (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -43,10 +32,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     created_at  TEXT    DEFAULT (datetime('now'))
 );
 
--- ─────────────────────────────────────
 -- Tabla: saving_challenges
--- Retos de ahorro personalizados del usuario.
--- ─────────────────────────────────────
 CREATE TABLE IF NOT EXISTS saving_challenges (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
@@ -58,18 +44,14 @@ CREATE TABLE IF NOT EXISTS saving_challenges (
     active      INTEGER DEFAULT 1
 );
 
--- ═══════════════════════════════════════
 -- Índices para rendimiento
--- ═══════════════════════════════════════
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_date    ON transactions(date);
 CREATE INDEX IF NOT EXISTS idx_transactions_type    ON transactions(type);
 CREATE INDEX IF NOT EXISTS idx_tx_user_date         ON transactions(user_id, date);
 CREATE INDEX IF NOT EXISTS idx_saving_challenges_user_id ON saving_challenges(user_id);
 
--- ═══════════════════════════════════════
--- Categorías predefinidas de GASTO (expense)
--- ═══════════════════════════════════════
+-- Categorías predefinidas
 INSERT OR IGNORE INTO categories (id, name, type, icon) VALUES
     (1,  'Comida',      'expense', 'restaurant'),
     (2,  'Transporte',  'expense', 'directions_bus'),
