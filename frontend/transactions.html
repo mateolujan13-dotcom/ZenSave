@@ -149,6 +149,17 @@
                         <div id="transactions-list" class="space-y-3">
                             <div class="p-8 text-center text-on-surface-variant font-data-label text-data-label">Cargando movimientos...</div>
                         </div>
+                        <div id="pagination" class="hidden flex items-center justify-between pt-6 pb-2">
+                            <button id="prev-page" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border-subtle text-on-surface-variant font-body-md text-body-md hover:bg-surface-variant/30 hover:text-primary transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                                Anterior
+                            </button>
+                            <span id="page-info" class="font-data-label text-data-label text-on-surface-variant"></span>
+                            <button id="next-page" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border-subtle text-on-surface-variant font-body-md text-body-md hover:bg-surface-variant/30 hover:text-primary transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                Siguiente
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Panel nuevo movimiento (escritorio) -->

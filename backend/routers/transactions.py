@@ -169,11 +169,12 @@ def create(body: TransactionBody, user_id: int = Depends(get_current_user)):
 def update(transaction_id: int, body: TransactionBody, user_id: int = Depends(get_current_user)):
     db = get_db()
     try:
+        db.execute('BEGIN')
         existing = db.execute('SELECT id, amount, description FROM transactions WHERE id=? AND user_id=?', (transaction_id, user_id)).fetchone()
         if not existing:
+            db.execute('ROLLBACK')
             raise HTTPException(404, detail='Transaccion no encontrada o acceso denegado')
 
-        # Si era un depósito a reto y se modificó, revertir el saldo anterior
         existing_desc = existing['description']
         if existing_desc and existing_desc.startswith('Depósito a reto #') and ': ' in existing_desc:
             challenge_id_str = existing_desc.split('#')[1].split(':')[0]
@@ -196,8 +197,15 @@ def update(transaction_id: int, body: TransactionBody, user_id: int = Depends(ge
             SELECT t.*, c.name as category_name, c.icon as category_icon
             FROM transactions t LEFT JOIN categories c ON t.category_id = c.id WHERE t.id=?
         ''', (transaction_id,)).fetchone()
+        db.execute('COMMIT')
         logger.info(f'TX update id={transaction_id} user_id={user_id}')
         return {'success': True, 'data': dict(tx)}
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.execute('ROLLBACK')
+        logger.error(f'TX update error id={transaction_id} user_id={user_id}: {e}')
+        raise HTTPException(500, detail='Error al actualizar la transacción')
     finally:
         db.close()
 
@@ -205,13 +213,14 @@ def update(transaction_id: int, body: TransactionBody, user_id: int = Depends(ge
 def remove(transaction_id: int, user_id: int = Depends(get_current_user)):
     db = get_db()
     try:
+        db.execute('BEGIN')
         tx = db.execute('SELECT id, amount, description FROM transactions WHERE id=? AND user_id=?', (transaction_id, user_id)).fetchone()
         if not tx:
+            db.execute('ROLLBACK')
             raise HTTPException(404, detail='Transaccion no encontrada o acceso denegado')
 
         desc = tx['description']
 
-        # Si es un depósito a reto, revertir el saldo del reto
         if desc and desc.startswith('Depósito a reto #') and ': ' in desc:
             challenge_id_str = desc.split('#')[1].split(':')[0]
             try:
@@ -227,7 +236,14 @@ def remove(transaction_id: int, user_id: int = Depends(get_current_user)):
                 logger.info(f'CHALLENGE deposit could not parse challenge_id from desc="{desc}"')
 
         db.execute('DELETE FROM transactions WHERE id=?', (transaction_id,))
+        db.execute('COMMIT')
         logger.info(f'TX delete id={transaction_id} user_id={user_id}')
         return {'success': True, 'data': {'id': transaction_id}}
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.execute('ROLLBACK')
+        logger.error(f'TX delete error id={transaction_id} user_id={user_id}: {e}')
+        raise HTTPException(500, detail='Error al eliminar la transacción')
     finally:
         db.close()

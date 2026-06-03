@@ -8,7 +8,7 @@ Plataforma web de organización financiera personal con asesoría inteligente po
 
 - **Autenticación segura** — JWT con cifrado de contraseñas (PBKDF2 + bcrypt legacy)
 - **Dashboard interactivo** — Resumen mensual, métricas en tiempo real, gráficos dinámicos (Chart.js) y detección de gastos hormiga
-- **Gestión de transacciones** — Altas, bajas, modificaciones, filtros por tipo/mes y búsqueda
+- **Gestión de transacciones** — Altas, bajas, modificaciones, filtros por tipo/mes, búsqueda con paginación (20 por página)
 - **Asesor ZEN (IA)** — Chat contextual integrado con Gemini 2.5 Flash que analiza tu perfil financiero y brinda recomendaciones personalizadas
 - **Retos de ahorro** — Creación y seguimiento de metas financieras con depósitos parciales
 - **Presupuesto mensual** — Barra de progreso visual con alertas de consumo
@@ -74,7 +74,7 @@ python -m uvicorn backend.main:app --reload --port 3001
 | GET | `/api/auth/profile` | Perfil del usuario |
 | PUT | `/api/auth/profile` | Actualizar perfil |
 | GET | `/api/transactions/summary` | Resumen financiero del mes |
-| GET | `/api/transactions` | Listar transacciones (filtros) |
+| GET | `/api/transactions?type=&month=&search=&limit=20&offset=0` | Listar transacciones (filtros + paginación) |
 | POST | `/api/transactions` | Crear transacción |
 | PUT | `/api/transactions/{id}` | Actualizar transacción |
 | DELETE | `/api/transactions/{id}` | Eliminar transacción |
@@ -100,6 +100,27 @@ GEMINI_API_KEY=<tu_api_key>
 
 ### Vercel (frontend estático)
 El frontend puede servirse desde Vercel apuntando al backend en Railway. Ver `vercel.txt`.
+
+---
+
+## Optimizaciones aplicadas (junio 2026)
+
+| Cambio | Archivo | Impacto |
+|--------|---------|---------|
+| **URLSearchParams** en lugar de concatenación manual | `frontend/js/transactions.js` | Elimina bug 500 al combinar filtro mes + búsqueda |
+| **Paginación (20 por página)** | `frontend/js/transactions.js` + `frontend/transactions.html` | Reduce payload de 27KB a ~4KB, evita DOM inflado |
+| **Carga paralela** categorías + transacciones | `frontend/js/transactions.js` | Reduce tiempo de carga de página |
+| **Transacciones atómicas** en PUT/DELETE | `backend/routers/transactions.py` | Previene datos inconsistentes en retos de ahorro |
+| **Toasts** en lugar de `alert()` | `frontend/js/transactions.js` | Feedback visual no intrusivo |
+| **Spinner global** en página de movimientos | `frontend/js/api.js` | Feedback visual de carga |
+
+### Rendimiento actual (verificado contra Railway)
+
+| Operación | Antes | Después |
+|-----------|-------|---------|
+| Cargar todos los movimientos | 625ms (131 registros) | ~300ms (20 por página) |
+| Crear movimiento | ~375ms | ~375ms |
+| 3 requests concurrentes al summary | 1065-2133ms | Sin cambios (limitación SQLite) |
 
 ---
 

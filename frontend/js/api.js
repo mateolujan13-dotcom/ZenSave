@@ -42,7 +42,7 @@ function showToast(message, type = 'info') {
 function toggleLoading(show) {
     let spinner = document.getElementById('global-spinner');
     if (!spinner) {
-        const header = document.querySelector('.header, .topbar, .chat-header');
+        const header = document.querySelector('.header, .topbar, .chat-header, header');
         if (header) {
             spinner = document.createElement('div');
             spinner.id = 'global-spinner';

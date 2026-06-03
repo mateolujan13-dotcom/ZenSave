@@ -1,5 +1,10 @@
 // ── ZEN SAVE — Transacciones ──
 
+const PAGE_SIZE = 20;
+let currentPage = 1;
+let categoriesData = [];
+let editingId = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     window.checkAuth();
     
@@ -8,15 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('user-name').textContent = user.name ? user.name.split(' ')[0] : 'Usuario';
     }
 
-    document.getElementById('filter-type')?.addEventListener('change', loadTransactions);
-    document.getElementById('filter-month')?.addEventListener('change', loadTransactions);
+    document.getElementById('filter-type')?.addEventListener('change', () => loadTransactions(1));
+    document.getElementById('filter-month')?.addEventListener('change', () => loadTransactions(1));
+
+    document.getElementById('prev-page')?.addEventListener('click', () => {
+        if (currentPage > 1) loadTransactions(currentPage - 1);
+    });
+    document.getElementById('next-page')?.addEventListener('click', () => {
+        loadTransactions(currentPage + 1);
+    });
     
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         let debounceTimer;
         searchInput.addEventListener('input', () => {
             clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(loadTransactions, 300);
+            debounceTimer = setTimeout(() => loadTransactions(1), 300);
         });
     }
     
@@ -37,17 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-logout')?.addEventListener('click', window.logout);
 
-    loadCategories();
-    loadTransactions();
+    Promise.all([loadCategories(), loadTransactions(1)]).catch(console.warn);
 
     const today = new Date();
     const localISO = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split('T')[0];
     const dateInput = document.getElementById('tx-date');
     if (dateInput) dateInput.value = localISO;
 });
-
-let categoriesData = [];
-let editingId = null;
 
 async function loadCategories() {
     const select = document.getElementById('tx-category');
@@ -67,7 +75,27 @@ async function loadCategories() {
     }
 }
 
-async function loadTransactions() {
+function updatePagination(total) {
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    const pagEl = document.getElementById('pagination');
+    const prevBtn = document.getElementById('prev-page');
+    const nextBtn = document.getElementById('next-page');
+    const infoEl = document.getElementById('page-info');
+    if (!pagEl) return;
+    if (total <= PAGE_SIZE) {
+        pagEl.classList.add('hidden');
+        return;
+    }
+    pagEl.classList.remove('hidden');
+    const from = (currentPage - 1) * PAGE_SIZE + 1;
+    const to = Math.min(currentPage * PAGE_SIZE, total);
+    infoEl.textContent = `${from}-${to} de ${total}`;
+    prevBtn.disabled = currentPage <= 1;
+    nextBtn.disabled = currentPage >= totalPages;
+}
+
+async function loadTransactions(page) {
+    currentPage = page || 1;
     const listEl = document.getElementById('transactions-list');
     if (!listEl) return;
 
@@ -75,14 +103,16 @@ async function loadTransactions() {
     const month = document.getElementById('filter-month')?.value;
     const search = document.getElementById('search-input')?.value;
     
-    let url = '/transactions?';
-    if (type) url += `type=${type}&`;
-    if (month) url += `month=${month}`;
-    if (search) url += `search=${encodeURIComponent(search)}&`;
+    const params = new URLSearchParams();
+    if (type) params.append('type', type);
+    if (month) params.append('month', month);
+    if (search) params.append('search', search);
+    params.append('limit', PAGE_SIZE);
+    params.append('offset', (currentPage - 1) * PAGE_SIZE);
 
     listEl.innerHTML = '<div class="p-8 text-center text-on-surface-variant skeleton" style="border-radius: 12px">Cargando tus movimientos...</div>';
 
-    const res = await window.API.get(url);
+    const res = await window.API.get(`/transactions?${params.toString()}`);
     
     if (res.success) {
         listEl.innerHTML = '';
@@ -96,12 +126,14 @@ async function loadTransactions() {
                     <p>No hay movimientos registrados en este periodo.</p>
                 </div>
             `;
+            updatePagination(0);
             return;
         }
 
         res.data.forEach(t => {
             listEl.innerHTML += renderTransaction(t);
         });
+        updatePagination(res.total);
     } else {
         listEl.innerHTML = `<div class="bg-surface border border-border-subtle rounded-[24px] p-8 text-center text-expense-red">Error: ${res.error}</div>`;
     }
@@ -263,10 +295,11 @@ async function submitTransaction(e) {
     if (res.success) {
         cancelEdit();
         document.getElementById('tx-modal')?.classList.remove('active');
-        loadTransactions();
+        showToast('Movimiento guardado', 'success');
+        loadTransactions(currentPage);
         if (typeof loadSummary === 'function') loadSummary();
     } else {
-        alert(res.error || 'Ocurrió un error al guardar el movimiento');
+        showToast(res.error || 'Ocurrió un error al guardar el movimiento', 'error');
     }
 }
 
@@ -284,18 +317,10 @@ async function deleteTransaction(id) {
     const res = await window.API.delete(`/transactions/${id}`);
     
     if (res.success) {
-        if (row) {
-            row.style.transform = 'translateX(20px)';
-            row.style.opacity = '0';
-            setTimeout(() => {
-                row.remove();
-                if (document.querySelectorAll('[id^="tx-"]').length === 0) {
-                    loadTransactions();
-                }
-            }, 250);
-        }
+        showToast('Movimiento eliminado', 'success');
+        loadTransactions(currentPage);
     } else {
-        alert(res.error || 'Error al eliminar');
+        showToast(res.error || 'Error al eliminar', 'error');
         if (row) {
             row.style.opacity = '1';
             row.style.pointerEvents = 'auto';
