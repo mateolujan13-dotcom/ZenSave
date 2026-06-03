@@ -122,7 +122,7 @@ function renderCards(cards) {
 }
 
 function updateSuggestions(suggestions) {
-    const container = document.querySelector('.flex.gap-2.overflow-x-auto.custom-scrollbar');
+    const container = document.getElementById('suggestion-chips');
     if (!container || !suggestions || suggestions.length === 0) return;
 
     const icons = ['insights', 'receipt_long', 'flag', 'lightbulb'];
@@ -142,16 +142,25 @@ function updateSuggestions(suggestions) {
 }
 
 async function loadInitialData() {
-    const res = await window.API.get('/asesor/inicio');
-    if (res.success) {
+    const user = JSON.parse(localStorage.getItem('zen_user') || '{}');
+    const fallback = [
+        '¿Cómo vengo con mi presupuesto?',
+        'Analiza mis gastos del mes',
+        'Sugerir un nuevo reto'
+    ];
+
+    const res = await window.API.get('/asesor/inicio').catch(() => ({ success: false }));
+    if (res && res.success) {
         if (conversationHistory.length > 0 && conversationHistory[0].role === 'ai') {
             conversationHistory[0].cards = res.data.cards || [];
             renderHistory();
         }
         if (res.data.suggestions) {
             updateSuggestions(res.data.suggestions);
+            return;
         }
     }
+    updateSuggestions(fallback);
 }
 
 function handleChatSubmit(e) {
