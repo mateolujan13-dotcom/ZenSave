@@ -73,16 +73,16 @@ python -m uvicorn backend.main:app --reload --port 3001
 | POST | `/api/auth/login` | Inicio de sesión |
 | GET | `/api/auth/profile` | Perfil del usuario |
 | PUT | `/api/auth/profile` | Actualizar perfil |
-| GET | `/api/transactions/summary` | Resumen financiero del mes |
-| GET | `/api/transactions?type=&month=&search=&limit=20&offset=0` | Listar transacciones (filtros + paginación) |
-| POST | `/api/transactions` | Crear transacción |
-| PUT | `/api/transactions/{id}` | Actualizar transacción |
-| DELETE | `/api/transactions/{id}` | Eliminar transacción |
-| GET | `/api/categories` | Listar categorías |
-| POST | `/api/ai/advice` | Consultar al Asesor ZEN |
-| POST | `/api/ai/challenges` | Crear reto de ahorro |
-| GET | `/api/ai/challenges` | Listar retos activos |
-| PATCH | `/api/ai/challenges/{id}/deposit` | Depositar en reto |
+| GET | `/api/transacciones/resumen` | Resumen financiero del mes |
+| GET | `/api/transacciones?type=&month=&search=&limit=20&offset=0` | Listar transacciones (filtros + paginación) |
+| POST | `/api/transacciones` | Crear transacción |
+| PUT | `/api/transacciones/{id}` | Actualizar transacción |
+| DELETE | `/api/transacciones/{id}` | Eliminar transacción |
+| GET | `/api/categorias` | Listar categorías |
+| POST | `/api/asesor/consejo` | Consultar al Asesor ZEN |
+| POST | `/api/asesor/retos` | Crear reto de ahorro |
+| GET | `/api/asesor/retos` | Listar retos activos |
+| PATCH | `/api/asesor/retos/{id}/depositar` | Depositar en reto |
 | GET | `/api/health` | Health check |
 
 ---
@@ -103,15 +103,27 @@ El frontend puede servirse desde Vercel apuntando al backend en Railway. Ver `ve
 
 ---
 
+## Refactorización a español (junio 2026)
+
+Toda la base de código se renombró al español para alinearse con el diagrama UML del proyecto:
+
+| Ámbito | Cambio |
+|--------|--------|
+| **Base de datos** | `users`→`usuarios`, `categories`→`categorias`, `transactions`→`transacciones`, `saving_challenges`→`retos_ahorro` |
+| **Backend (rutas)** | `/api/transactions`→`/api/transacciones`, `/api/categories`→`/api/categorias`, `/api/ai`→`/api/asesor` |
+| **Backend (schemas)** | `TransactionBody`→`TransaccionBody`, `AdviceBody`→`ConsejoBody`, `ChallengeBody`→`RetoBody`, etc. |
+| **Frontend (archivos)** | `dashboard`→`panel-financiero`, `transactions`→`transacciones`, `ai`→`asesor`, `settings`→`ajustes` |
+| **Frontend (JS)** | `user.name`→`user.nombre`, `user.monthly_salary`→`user.salario_mensual`, `user.monthly_goal`→`user.meta_mensual`, etc. |
+
 ## Optimizaciones aplicadas (junio 2026)
 
 | Cambio | Archivo | Impacto |
 |--------|---------|---------|
-| **URLSearchParams** en lugar de concatenación manual | `frontend/js/transactions.js` | Elimina bug 500 al combinar filtro mes + búsqueda |
-| **Paginación (20 por página)** | `frontend/js/transactions.js` + `frontend/transactions.html` | Reduce payload de 27KB a ~4KB, evita DOM inflado |
-| **Carga paralela** categorías + transacciones | `frontend/js/transactions.js` | Reduce tiempo de carga de página |
+| **URLSearchParams** en lugar de concatenación manual | `frontend/js/transacciones.js` | Elimina bug 500 al combinar filtro mes + búsqueda |
+| **Paginación (20 por página)** | `frontend/js/transacciones.js` + `frontend/transacciones.html` | Reduce payload de 27KB a ~4KB, evita DOM inflado |
+| **Carga paralela** categorías + transacciones | `frontend/js/transacciones.js` | Reduce tiempo de carga de página |
 | **Transacciones atómicas** en PUT/DELETE | `backend/routers/transactions.py` | Previene datos inconsistentes en retos de ahorro |
-| **Toasts** en lugar de `alert()` | `frontend/js/transactions.js` | Feedback visual no intrusivo |
+| **Toasts** en lugar de `alert()` | `frontend/js/transacciones.js` | Feedback visual no intrusivo |
 | **Spinner global** en página de movimientos | `frontend/js/api.js` | Feedback visual de carga |
 
 ### Rendimiento actual (verificado contra Railway)

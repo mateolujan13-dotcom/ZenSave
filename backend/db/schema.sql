@@ -1,58 +1,51 @@
 -- ZEN SAVE — Schema de Base de Datos (SQLite)
--- Ejecutado automáticamente por database.js si las tablas no existen.
 
--- Tabla: users
-CREATE TABLE IF NOT EXISTS users (
-    id            INTEGER PRIMARY KEY AUTOINCREMENT,
-    name          TEXT    NOT NULL,
-    email         TEXT    UNIQUE NOT NULL,
-    password      TEXT    NOT NULL,
-    monthly_goal  REAL    DEFAULT 0,
-    monthly_salary REAL   DEFAULT 0,
-    created_at    TEXT    DEFAULT (datetime('now'))
+CREATE TABLE IF NOT EXISTS usuarios (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre          TEXT    NOT NULL,
+    email           TEXT    UNIQUE NOT NULL,
+    contrasena      TEXT    NOT NULL,
+    meta_mensual    REAL    DEFAULT 0,
+    salario_mensual REAL    DEFAULT 0,
+    fecha_creacion  TEXT    DEFAULT (datetime('now'))
 );
 
--- Tabla: categories
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE IF NOT EXISTS categorias (
     id    INTEGER PRIMARY KEY AUTOINCREMENT,
-    name  TEXT    NOT NULL,
-    type  TEXT    NOT NULL CHECK(type IN ('expense', 'income')),
-    icon  TEXT
+    nombre  TEXT    NOT NULL,
+    tipo  TEXT    NOT NULL CHECK(tipo IN ('expense', 'income')),
+    icono TEXT
 );
 
--- Tabla: transactions
-CREATE TABLE IF NOT EXISTS transactions (
+CREATE TABLE IF NOT EXISTS transacciones (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    type        TEXT    NOT NULL CHECK(type IN ('income', 'expense')),
-    amount      REAL    NOT NULL CHECK(amount > 0),
-    category_id INTEGER REFERENCES categories(id),
-    description TEXT,
-    date        TEXT    NOT NULL,
-    created_at  TEXT    DEFAULT (datetime('now'))
+    usuario_id  INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    tipo        TEXT    NOT NULL CHECK(tipo IN ('income', 'expense')),
+    monto       REAL    NOT NULL CHECK(monto > 0),
+    categoria_id INTEGER REFERENCES categorias(id),
+    descripcion TEXT,
+    fecha       TEXT    NOT NULL,
+    creado_en   TEXT    DEFAULT (datetime('now'))
 );
 
--- Tabla: saving_challenges
-CREATE TABLE IF NOT EXISTS saving_challenges (
+CREATE TABLE IF NOT EXISTS retos_ahorro (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    title       TEXT    NOT NULL,
-    target      REAL    NOT NULL CHECK(target > 0),
-    current     REAL    DEFAULT 0,
-    start_date  TEXT,
-    end_date    TEXT,
-    active      INTEGER DEFAULT 1
+    usuario_id  INTEGER REFERENCES usuarios(id) ON DELETE CASCADE,
+    titulo      TEXT    NOT NULL,
+    objetivo    REAL    NOT NULL CHECK(objetivo > 0),
+    actual      REAL    DEFAULT 0,
+    fecha_inicio TEXT,
+    fecha_fin   TEXT,
+    activo      INTEGER DEFAULT 1
 );
 
--- Índices para rendimiento
-CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
-CREATE INDEX IF NOT EXISTS idx_transactions_date    ON transactions(date);
-CREATE INDEX IF NOT EXISTS idx_transactions_type    ON transactions(type);
-CREATE INDEX IF NOT EXISTS idx_tx_user_date         ON transactions(user_id, date);
-CREATE INDEX IF NOT EXISTS idx_saving_challenges_user_id ON saving_challenges(user_id);
+CREATE INDEX IF NOT EXISTS idx_transacciones_usuario_id ON transacciones(usuario_id);
+CREATE INDEX IF NOT EXISTS idx_transacciones_fecha    ON transacciones(fecha);
+CREATE INDEX IF NOT EXISTS idx_transacciones_tipo    ON transacciones(tipo);
+CREATE INDEX IF NOT EXISTS idx_tx_usuario_fecha      ON transacciones(usuario_id, fecha);
+CREATE INDEX IF NOT EXISTS idx_retos_ahorro_usuario_id ON retos_ahorro(usuario_id);
 
--- Categorías predefinidas
-INSERT OR IGNORE INTO categories (id, name, type, icon) VALUES
+INSERT OR IGNORE INTO categorias (id, nombre, tipo, icono) VALUES
     (1,  'Comida',      'expense', 'restaurant'),
     (2,  'Transporte',  'expense', 'directions_bus'),
     (3,  'Ocio',        'expense', 'sports_esports'),

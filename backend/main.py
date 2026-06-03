@@ -8,8 +8,8 @@ from backend.database import init_db
 from backend.logger import logger
 from backend.routers import auth, transactions, categories, ai
 
-load_dotenv()     # busca .env en la raíz primero
-load_dotenv('backend/.env', override=False)  # respaldo
+load_dotenv()
+load_dotenv('backend/.env', override=False)
 
 init_db()
 
@@ -33,9 +33,9 @@ async def log_requests(request, call_next):
     return response
 
 app.include_router(auth.router, prefix='/api/auth')
-app.include_router(transactions.router, prefix='/api/transactions')
-app.include_router(categories.router, prefix='/api/categories')
-app.include_router(ai.router, prefix='/api/ai')
+app.include_router(transactions.router, prefix='/api/transacciones')
+app.include_router(categories.router, prefix='/api/categorias')
+app.include_router(ai.router, prefix='/api/asesor')
 
 @app.get('/api/health')
 def health():

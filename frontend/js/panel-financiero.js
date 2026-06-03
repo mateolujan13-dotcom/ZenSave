@@ -1,12 +1,10 @@
-// ── ZEN SAVE — Dashboard ──
-
 document.addEventListener('DOMContentLoaded', () => {
     window.checkAuth();
 
     const user = JSON.parse(localStorage.getItem('zen_user'));
     if (user) {
-        document.getElementById('user-name').textContent = user.nombre.split(' ')[0];
-        document.getElementById('user-avatar').textContent = user.nombre.charAt(0).toUpperCase();
+        document.getElementById('user-name').textContent = user.nombre ? user.nombre.split(' ')[0] : 'Usuario';
+        document.getElementById('user-avatar').textContent = user.nombre ? user.nombre.charAt(0).toUpperCase() : 'U';
         
         const now = new Date();
         const monthName = now.toLocaleString('es-ES', { month: 'long' });

@@ -1,6 +1,3 @@
-// ── ZEN SAVE — Autenticación ──
-// Maneja login/registro y estado de sesión
-
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('login-form')?.addEventListener('submit', handleLogin);
     document.getElementById('register-form')?.addEventListener('submit', handleRegister);
@@ -23,12 +20,12 @@ async function handleLogin(e) {
     btn.disabled = true;
 
     try {
-        const response = await window.API.post('/auth/login', { email, password });
+        const response = await window.API.post('/auth/login', { email, contrasena: password });
 
         if (response.success) {
             localStorage.setItem('zen_token', response.token);
             localStorage.setItem('zen_user', JSON.stringify(response.user));
-            window.location.href = 'dashboard.html';
+            window.location.href = 'panel-financiero.html';
         } else {
             errorEl.textContent = response.error || 'Error al iniciar sesión';
             errorEl.classList.remove('hidden');
@@ -46,7 +43,6 @@ async function handleRegister(e) {
     e.preventDefault();
     const form = e.target;
     
-    // Compatibilidad: form nuevo (name) y legacy (firstname + lastname)
     let name;
     if (form.name && form.name.value.trim()) {
         name = form.name.value.trim();
@@ -77,12 +73,12 @@ async function handleRegister(e) {
     btn.disabled = true;
 
     try {
-        const response = await window.API.post('/auth/register', { name, email, password });
+        const response = await window.API.post('/auth/register', { nombre: name, email, contrasena: password });
 
         if (response.success) {
             localStorage.setItem('zen_token', response.token);
             localStorage.setItem('zen_user', JSON.stringify(response.user));
-            window.location.href = 'dashboard.html';
+            window.location.href = 'panel-financiero.html';
         } else {
             errorEl.textContent = response.error || 'Error al registrarse';
             errorEl.classList.remove('hidden');

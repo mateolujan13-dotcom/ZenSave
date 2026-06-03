@@ -1,34 +1,34 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
-class RegisterBody(BaseModel):
-    name: str
+class RegistroBody(BaseModel):
+    nombre: str
     email: str
-    password: str
+    contrasena: str
 
-class LoginBody(BaseModel):
+class InicioSesionBody(BaseModel):
     email: str
-    password: str
+    contrasena: str
 
-class UpdateProfileBody(BaseModel):
-    name: str
-    monthly_goal: float = 0
-    monthly_salary: float = 0
+class ActualizarPerfilBody(BaseModel):
+    nombre: str
+    meta_mensual: float = 0
+    salario_mensual: float = 0
 
-class TransactionBody(BaseModel):
-    type: str = Field(..., pattern='^(income|expense)$')
-    amount: float = Field(..., gt=0)
-    category_id: Optional[int] = None
-    description: str = ''
-    date: str
+class TransaccionBody(BaseModel):
+    tipo: str = Field(..., pattern='^(income|expense)$')
+    monto: float = Field(..., gt=0)
+    categoria_id: Optional[int] = None
+    descripcion: str = ''
+    fecha: str
 
-class AdviceBody(BaseModel):
-    message: str
+class ConsejoBody(BaseModel):
+    mensaje: str
 
-class ChallengeBody(BaseModel):
-    title: str
-    target: float = Field(..., gt=0)
-    end_date: Optional[str] = None
+class RetoBody(BaseModel):
+    titulo: str
+    objetivo: float = Field(..., gt=0)
+    fecha_fin: Optional[str] = None
 
-class DepositBody(BaseModel):
-    amount: float = Field(..., gt=0)
+class DepositoBody(BaseModel):
+    monto: float = Field(..., gt=0)

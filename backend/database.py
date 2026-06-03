@@ -18,7 +18,7 @@ def get_db():
 
 def _seed():
     with get_db() as db:
-        row = db.execute('SELECT COUNT(*) as c FROM users').fetchone()
+        row = db.execute('SELECT COUNT(*) as c FROM usuarios').fetchone()
         if row['c'] > 0:
             return
         db.executescript(SEED_SQL)
