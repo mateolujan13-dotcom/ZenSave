@@ -190,12 +190,226 @@ def get_advice(body: ConsejoBody, user_id: int = Depends(get_current_user)):
         )
         reply = response.text
 
+        # ── Tarjetas de recomendación ──
+        cards = []
+
+        if accumulated_balance != 0:
+            cards.append({
+                'icon': 'account_balance',
+                'title': 'Balance total',
+                'value': f"${accumulated_balance:.0f}",
+                'subtitle': 'Acumulado histórico',
+                'type': 'success' if accumulated_balance > 0 else 'error'
+            })
+
+        if monthly_goal > 0:
+            budget_type = 'error' if goal_percent > 100 else ('warning' if goal_percent > 80 else 'success')
+            cards.append({
+                'icon': 'speed',
+                'title': 'Presupuesto',
+                'value': f"{goal_percent}%",
+                'subtitle': f"${total_expense:.0f} de ${monthly_goal:.0f}",
+                'type': budget_type
+            })
+
+        if top_cats:
+            top = top_cats[0]
+            pct_of_total = round((top['total'] / max(total_expense, 1)) * 100, 0)
+            cards.append({
+                'icon': 'category',
+                'title': top['nombre'],
+                'value': f"${top['total']:.0f}",
+                'subtitle': f"{pct_of_total:.0f}% de gastos",
+                'type': 'info'
+            })
+
+        if prev_expense > 0:
+            direction = 'up' if total_expense > prev_expense else 'down'
+            cards.append({
+                'icon': 'trending_up' if direction == 'up' else 'trending_down',
+                'title': 'Vs. mes anterior',
+                'value': f"{trend_pct}%",
+                'subtitle': f"{'Subió' if direction == 'up' else 'Bajó'} desde ${prev_expense:.0f}",
+                'type': 'error' if direction == 'up' else 'success'
+            })
+
+        if micro:
+            total_micro = sum(r['amount'] for r in micro)
+            cards.append({
+                'icon': 'bug_report',
+                'title': 'Gastos hormiga',
+                'value': f"${total_micro:.0f}",
+                'subtitle': f"{len(micro)} hábitos",
+                'type': 'warning'
+            })
+
+        # ── Sugerencias contextuales ──
+        suggestions = []
+        if goal_percent > 80:
+            suggestions.append('¿Cómo reduzco mis gastos?')
+        if micro:
+            suggestions.append('Eliminar gastos hormiga')
+        if challenges:
+            ch = challenges[0]
+            ch_pct = round((ch['actual'] / ch['objetivo']) * 100, 0) if ch['objetivo'] > 0 else 0
+            if ch_pct < 100:
+                suggestions.append(f'Completar reto "{ch["titulo"]}"')
+        if trend_pct > 10 and total_expense > prev_expense:
+            suggestions.append('¿Por qué subieron mis gastos?')
+        if accumulated_balance < 0:
+            suggestions.append('Salir de deudas')
+        if len(suggestions) < 2:
+            suggestions.append('Consejo personalizado')
+        if len(suggestions) < 3:
+            suggestions.append('¿Ahorro suficiente?')
+
         logger.info(f'AI advice user_id={user_id}')
-        return {'success': True, 'data': {'reply': reply}}
+        return {
+            'success': True,
+            'data': {
+                'reply': reply,
+                'cards': cards[:4],
+                'suggestions': suggestions[:4]
+            }
+        }
 
     except Exception as e:
         logger.error(f'AI advice error: {e}')
         raise HTTPException(500, detail='No se pudo contactar al Asesor ZEN en este momento.')
+    finally:
+        db.close()
+
+@router.get('/inicio')
+def get_initial_data(user_id: int = Depends(get_current_user)):
+    db = get_db()
+    try:
+        user = db.execute('SELECT nombre, salario_mensual, meta_mensual FROM usuarios WHERE id=?', (user_id,)).fetchone()
+        if not user:
+            raise HTTPException(404, detail='Usuario no encontrado')
+
+        now = datetime.datetime.now()
+        current_month = now.strftime('%Y-%m')
+
+        month_tx = db.execute('''
+            SELECT tipo, SUM(monto) as total FROM transacciones
+            WHERE usuario_id=? AND strftime('%Y-%m', fecha)=? GROUP BY tipo
+        ''', (user_id, current_month)).fetchall()
+
+        total_income = 0
+        total_expense = 0
+        for row in month_tx:
+            if row['tipo'] == 'income':
+                total_income = row['total'] or 0
+            if row['tipo'] == 'expense':
+                total_expense = row['total'] or 0
+
+        monthly_goal = user['meta_mensual'] or 0
+        goal_percent = round((total_expense / monthly_goal * 100), 1) if monthly_goal > 0 else 0
+
+        all_time = db.execute("SELECT SUM(CASE WHEN tipo='income' THEN monto ELSE 0 END) as inc, SUM(CASE WHEN tipo='expense' THEN monto ELSE 0 END) as exp FROM transacciones WHERE usuario_id=?", (user_id,)).fetchone()
+        accumulated_balance = (all_time['inc'] or 0) - (all_time['exp'] or 0)
+
+        top_cats = db.execute('''
+            SELECT c.nombre, SUM(t.monto) as total
+            FROM transacciones t JOIN categorias c ON t.categoria_id = c.id
+            WHERE t.usuario_id=? AND t.tipo='expense' AND strftime('%Y-%m', t.fecha)=?
+            GROUP BY c.id ORDER BY total DESC LIMIT 5
+        ''', (user_id, current_month)).fetchall()
+
+        micro = db.execute('''
+            SELECT descripcion, SUM(monto) as amount, COUNT(*) as count
+            FROM transacciones WHERE usuario_id=? AND tipo='expense' AND monto<500
+              AND descripcion!='' AND strftime('%Y-%m', fecha)=?
+            GROUP BY descripcion HAVING COUNT(*)>=3 ORDER BY amount DESC
+        ''', (user_id, current_month)).fetchall()
+
+        challenges = db.execute('''
+            SELECT titulo, objetivo, actual FROM retos_ahorro WHERE usuario_id=? AND activo=1
+        ''', (user_id,)).fetchall()
+
+        prev_month = (now.replace(day=1) - datetime.timedelta(days=1)).strftime('%Y-%m')
+        prev = db.execute('''
+            SELECT SUM(monto) as total FROM transacciones
+            WHERE usuario_id=? AND tipo='expense' AND strftime('%Y-%m', fecha)=?
+        ''', (user_id, prev_month)).fetchone()
+        prev_expense = prev['total'] or 0
+        trend_pct = abs(round((total_expense - prev_expense) / max(prev_expense, 1) * 100, 1))
+
+        # ── Tarjetas ──
+        cards = []
+        if accumulated_balance != 0:
+            cards.append({
+                'icon': 'account_balance',
+                'title': 'Balance total',
+                'value': f"${accumulated_balance:.0f}",
+                'subtitle': 'Acumulado histórico',
+                'type': 'success' if accumulated_balance > 0 else 'error'
+            })
+        if monthly_goal > 0:
+            budget_type = 'error' if goal_percent > 100 else ('warning' if goal_percent > 80 else 'success')
+            cards.append({
+                'icon': 'speed',
+                'title': 'Presupuesto',
+                'value': f"{goal_percent}%",
+                'subtitle': f"${total_expense:.0f} de ${monthly_goal:.0f}",
+                'type': budget_type
+            })
+        if top_cats:
+            top = top_cats[0]
+            pct_of_total = round((top['total'] / max(total_expense, 1)) * 100, 0)
+            cards.append({
+                'icon': 'category',
+                'title': top['nombre'],
+                'value': f"${top['total']:.0f}",
+                'subtitle': f"{pct_of_total:.0f}% de gastos",
+                'type': 'info'
+            })
+        if prev_expense > 0:
+            direction = 'up' if total_expense > prev_expense else 'down'
+            cards.append({
+                'icon': 'trending_up' if direction == 'up' else 'trending_down',
+                'title': 'Vs. mes anterior',
+                'value': f"{trend_pct}%",
+                'subtitle': f"{'Subió' if direction == 'up' else 'Bajó'}",
+                'type': 'error' if direction == 'up' else 'success'
+            })
+        if micro:
+            total_micro = sum(r['amount'] for r in micro)
+            cards.append({
+                'icon': 'bug_report',
+                'title': 'Gastos hormiga',
+                'value': f"${total_micro:.0f}",
+                'subtitle': f"{len(micro)} hábitos",
+                'type': 'warning'
+            })
+
+        # ── Sugerencias ──
+        suggestions = []
+        if goal_percent > 80:
+            suggestions.append('¿Cómo reduzco mis gastos?')
+        if micro:
+            suggestions.append('Eliminar gastos hormiga')
+        if challenges:
+            ch = challenges[0]
+            ch_pct = round((ch['actual'] / ch['objetivo']) * 100, 0) if ch['objetivo'] > 0 else 0
+            if ch_pct < 100:
+                suggestions.append(f'Completar reto "{ch["titulo"]}"')
+        if trend_pct > 10 and total_expense > prev_expense:
+            suggestions.append('¿Por qué subieron mis gastos?')
+        if accumulated_balance < 0:
+            suggestions.append('Salir de deudas')
+        if len(suggestions) < 2:
+            suggestions.append('Consejo personalizado')
+        if len(suggestions) < 3:
+            suggestions.append('¿Ahorro suficiente?')
+
+        return {
+            'success': True,
+            'data': {
+                'cards': cards[:4],
+                'suggestions': suggestions[:4]
+            }
+        }
     finally:
         db.close()
 

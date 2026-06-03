@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     });
     renderHistory();
+    loadInitialData();
 
     document.getElementById('chat-form')?.addEventListener('submit', handleChatSubmit);
     document.querySelectorAll('.suggestion-chip').forEach(chip => {
@@ -77,10 +78,79 @@ function renderMessage(msg) {
                 </div>
                 <div class="bg-surface-container backdrop-blur-md rounded-2xl rounded-tl-sm p-4 border border-border-subtle card-glow flex-1">
                     <div class="text-sm leading-relaxed">${parseMarkdown(msg.text)}</div>
+                    ${msg.cards ? renderCards(msg.cards) : ''}
                     <span class="text-xs text-on-surface-variant mt-1 block">${msg.time}</span>
                 </div>
             </div>
         `;
+    }
+}
+
+function renderCards(cards) {
+    if (!cards || cards.length === 0) return '';
+
+    const typeStyles = {
+        error: 'border-[#FF5252]/30 bg-[#FF5252]/5',
+        warning: 'border-[#FFB300]/30 bg-[#FFB300]/5',
+        success: 'border-secondary/30 bg-secondary/5',
+        info: 'border-primary/30 bg-primary/5'
+    };
+    const iconStyles = {
+        error: 'text-[#FF5252]',
+        warning: 'text-[#FFB300]',
+        success: 'text-secondary',
+        info: 'text-primary'
+    };
+
+    let html = '<div class="flex gap-2 overflow-x-auto custom-scrollbar mt-3 pb-1 -mx-1 px-1">';
+    cards.forEach(card => {
+        const style = typeStyles[card.type] || typeStyles.info;
+        const iconStyle = iconStyles[card.type] || iconStyles.info;
+        html += `
+            <div class="shrink-0 w-40 p-3 rounded-xl border ${style}">
+                <div class="flex items-center gap-1.5 mb-1.5">
+                    <span class="material-symbols-outlined text-sm ${iconStyle}">${card.icon}</span>
+                    <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">${card.title}</span>
+                </div>
+                <p class="font-data-display text-lg font-bold text-on-surface">${card.value}</p>
+                <p class="text-[10px] text-on-surface-variant">${card.subtitle}</p>
+            </div>
+        `;
+    });
+    html += '</div>';
+    return html;
+}
+
+function updateSuggestions(suggestions) {
+    const container = document.querySelector('.flex.gap-2.overflow-x-auto.custom-scrollbar');
+    if (!container || !suggestions || suggestions.length === 0) return;
+
+    const icons = ['insights', 'receipt_long', 'flag', 'lightbulb'];
+    container.innerHTML = suggestions.map((text, i) => `
+        <button class="suggestion-chip whitespace-nowrap px-4 py-1.5 rounded-full border border-border-subtle bg-surface-container-low text-on-surface-variant font-data-label text-data-label hover:border-primary/50 hover:text-primary transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[14px]">${icons[i % icons.length]}</span>
+            ${text}
+        </button>
+    `).join('');
+
+    container.querySelectorAll('.suggestion-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const text = chip.childNodes[chip.childNodes.length - 1].textContent.trim();
+            sendMessage(text);
+        });
+    });
+}
+
+async function loadInitialData() {
+    const res = await window.API.get('/asesor/inicio');
+    if (res.success) {
+        if (conversationHistory.length > 0 && conversationHistory[0].role === 'ai') {
+            conversationHistory[0].cards = res.data.cards || [];
+            renderHistory();
+        }
+        if (res.data.suggestions) {
+            updateSuggestions(res.data.suggestions);
+        }
     }
 }
 
@@ -132,8 +202,12 @@ async function sendMessage(text) {
         conversationHistory.push({
             role: 'ai',
             text: res.data.reply,
+            cards: res.data.cards || [],
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         });
+        if (res.data.suggestions) {
+            updateSuggestions(res.data.suggestions);
+        }
     } else {
         conversationHistory.push({
             role: 'ai',
