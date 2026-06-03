@@ -22,8 +22,13 @@ class TransaccionBody(BaseModel):
     descripcion: str = ''
     fecha: str
 
+class MensajeHistorial(BaseModel):
+    role: str
+    text: str
+
 class ConsejoBody(BaseModel):
     mensaje: str
+    historial: list[MensajeHistorial] = []
 
 class RetoBody(BaseModel):
     titulo: str

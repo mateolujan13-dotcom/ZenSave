@@ -33,6 +33,7 @@ def get_advice(body: ConsejoBody, user_id: int = Depends(get_current_user)):
         fecha_str = now.strftime('%d/%m/%Y %H:%M')
         days_left = (datetime.date(now.year, now.month + 1, 1) - now.date()).days if now.month < 12 else (datetime.date(now.year + 1, 1, 1) - now.date()).days
 
+        # ── Datos del mes actual ──
         month_tx = db.execute('''
             SELECT tipo, SUM(monto) as total FROM transacciones
             WHERE usuario_id=? AND strftime('%Y-%m', fecha)=? GROUP BY tipo
@@ -54,22 +55,62 @@ def get_advice(body: ConsejoBody, user_id: int = Depends(get_current_user)):
         goal_percent = round((total_expense / monthly_goal * 100), 1) if monthly_goal > 0 else 0
         daily_avg = round(total_expense / now.day, 2) if now.day > 0 else 0
 
+        # ── Balance acumulado histórico ──
+        all_time = db.execute("SELECT SUM(CASE WHEN tipo='income' THEN monto ELSE 0 END) as inc, SUM(CASE WHEN tipo='expense' THEN monto ELSE 0 END) as exp FROM transacciones WHERE usuario_id=?", (user_id,)).fetchone()
+        accumulated_balance = (all_time['inc'] or 0) - (all_time['exp'] or 0)
+
+        # ── Top categorías del mes ──
         top_cats = db.execute('''
             SELECT c.nombre, SUM(t.monto) as total
             FROM transacciones t JOIN categorias c ON t.categoria_id = c.id
             WHERE t.usuario_id=? AND t.tipo='expense' AND strftime('%Y-%m', t.fecha)=?
-            GROUP BY c.id ORDER BY total DESC LIMIT 3
+            GROUP BY c.id ORDER BY total DESC LIMIT 5
         ''', (user_id, current_month)).fetchall()
         top_categories_str = '\n'.join([f'- {r["nombre"]}: ${r["total"]:.2f}' for r in top_cats]) if top_cats else 'No hay gastos registrados este mes.'
 
+        # ── Gastos hormiga ──
         micro = db.execute('''
             SELECT descripcion, SUM(monto) as amount, COUNT(*) as count
             FROM transacciones WHERE usuario_id=? AND tipo='expense' AND monto<500
               AND descripcion!='' AND strftime('%Y-%m', fecha)=?
             GROUP BY descripcion HAVING COUNT(*)>=3 ORDER BY amount DESC
         ''', (user_id, current_month)).fetchall()
-        micro_str = '\n'.join([f'- {r["descripcion"]}: ${r["amount"]:.2f} (repetido {r["count"]} veces)' for r in micro]) if micro else 'No se detectaron gastos hormiga significativos.'
+        micro_str = '\n'.join([f'- {r["descripcion"]}: ${r["amount"]:.2f} ({r["count"]} veces)' for r in micro]) if micro else 'Sin gastos hormiga significativos.'
 
+        # ── Historial mes a mes (últimos 6) ──
+        monthly_history = db.execute('''
+            SELECT strftime('%Y-%m', fecha) as mes,
+                   SUM(CASE WHEN tipo='income' THEN monto ELSE 0 END) as ingresos,
+                   SUM(CASE WHEN tipo='expense' THEN monto ELSE 0 END) as gastos
+            FROM transacciones WHERE usuario_id=?
+            GROUP BY mes ORDER BY mes DESC LIMIT 6
+        ''', (user_id,)).fetchall()
+        monthly_history.reverse()
+        monthly_str_lines = [f'- {r["mes"]}: ingresos=${r["ingresos"] or 0:.2f}, gastos=${r["gastos"] or 0:.2f}' for r in monthly_history]
+        monthly_str = '\n'.join(monthly_str_lines) if monthly_str_lines else 'Sin datos historicos.'
+
+        # ── Últimas transacciones recientes ──
+        recent_tx = db.execute('''
+            SELECT t.tipo, t.monto, t.descripcion, t.fecha, c.nombre as categoria
+            FROM transacciones t LEFT JOIN categorias c ON t.categoria_id = c.id
+            WHERE t.usuario_id=? ORDER BY t.fecha DESC, t.creado_en DESC LIMIT 5
+        ''', (user_id,)).fetchall()
+        recent_str = '\n'.join([
+            f'- {r["fecha"]} | {r["tipo"]=="income" and "INGRESO" or "GASTO"} | ${r["monto"]:.2f} | {r["categoria"] or "General"}{r["descripcion"] and ": "+r["descripcion"] or ""}'
+            for r in recent_tx
+        ]) if recent_tx else 'Sin transacciones recientes.'
+
+        # ── Retos de ahorro con progreso ──
+        challenges = db.execute('''
+            SELECT titulo, objetivo, actual FROM retos_ahorro WHERE usuario_id=? AND activo=1
+        ''', (user_id,)).fetchall()
+        challenges_str_lines = []
+        for r in challenges:
+            pct = round((r['actual'] / r['objetivo']) * 100, 1) if r['objetivo'] > 0 else 0
+            challenges_str_lines.append(f'- {r["titulo"]}: ${r["actual"]:.2f} / ${r["objetivo"]:.2f} ({pct}%)')
+        challenges_str = '\n'.join(challenges_str_lines) if challenges_str_lines else 'Sin retos activos.'
+
+        # ── Tendencia vs mes anterior ──
         prev_month = (now.replace(day=1) - datetime.timedelta(days=1)).strftime('%Y-%m')
         prev = db.execute('''
             SELECT SUM(monto) as total FROM transacciones
@@ -79,31 +120,69 @@ def get_advice(body: ConsejoBody, user_id: int = Depends(get_current_user)):
         trend_direction = 'SUBIO' if total_expense > prev_expense else 'BAJO'
         trend_pct = abs(round((total_expense - prev_expense) / max(prev_expense, 1) * 100, 1))
 
-        challenges = db.execute('''
-            SELECT titulo, objetivo FROM retos_ahorro WHERE usuario_id=? AND activo=1
-        ''', (user_id,)).fetchall()
-        challenges_str = '\n'.join([f'- {r["titulo"]}: Meta de ${r["objetivo"]:.2f}' for r in challenges]) if challenges else 'No tiene retos de ahorro activos en este momento.'
+        # ── Construir conversación ──
+        chat_history = ''
+        for msg in body.historial:
+            role = 'Usuario' if msg.role == 'user' else 'Asesor ZEN'
+            chat_history += f'\n{role}: {msg.text}'
 
-        prompt = f'''Sos ZEN AI, asesor financiero personal de la app ZEN SAVE.
-El usuario se llama {user['nombre']}. Hoy es {fecha_str}.
+        prompt = f'''Sos ZEN AI, un asesor financiero personal experto dentro de la app ZEN SAVE. Tene siempre presente que tu propósito es ayudar al usuario a tomar mejores decisiones financieras.
 
-SITUACION FINANCIERA ACTUAL:
-- Ingresos: ${total_income:.2f} | Gastos: ${total_expense:.2f} | Balance: ${balance:.2f}
-- Meta de gasto mensual: ${monthly_goal:.2f} ({goal_percent}% consumido)
-- Tendencia vs mes anterior: {trend_direction} un {trend_pct}%
-- Gasto diario promedio: ${daily_avg:.2f} | Dias restantes del mes: {days_left}
-- Top categorias de gasto:
+## Identidad y tono
+- Te llamas "Asesor ZEN" o "ZEN AI".
+- Hablás en español rioplatense argentino (voseo: "tenés", "podés", "decime").
+- Tu tono es mixto: profesional y preciso cuando analizás números, cálido y motivacional cuando aconsejás.
+- Usás un estilo zen pero sin ser esotérico: sos claro, directo y con vocación de ayudar.
+- Respondé siempre en Markdown para facilitar la lectura.
+- Si el usuario está en una mala situación financiera, sé empático pero constructivo.
+- Si el usuario viene bien, festejalo brevemente ("¡Venis bárbaro!", "Buen laburo este mes").
+
+## Perfil del usuario
+- Nombre: {user['nombre']}
+- Salario mensual declarado: ${monthly_salary:.2f}
+- Meta de gasto mensual: ${monthly_goal:.2f}
+- Hoy: {fecha_str} | Días restantes del mes: {days_left}
+
+## Situación financiera del mes actual ({current_month})
+- Ingresos totales (con salario): ${total_income:.2f}
+- Gastos totales: ${total_expense:.2f}
+- Balance mensual: ${balance:.2f}
+- Meta de gasto consumida: {goal_percent}%
+- Gasto diario promedio: ${daily_avg:.2f}
+- Tendencia vs mes anterior ({prev_month}): {trend_direction} un {trend_pct}%
+- Balance acumulado histórico (desde el inicio): ${accumulated_balance:.2f}
+
+## Top categorías de gasto este mes
 {top_categories_str}
-- Gastos hormiga detectados:
+
+## Gastos hormiga detectados
 {micro_str}
-- Retos de ahorro activos:
+
+## Historial mes a mes (últimos 6 meses)
+{monthly_str}
+
+## Últimas transacciones
+{recent_str}
+
+## Retos de ahorro activos
 {challenges_str}
 
-INSTRUCCIONES: Responde en espanol rioplatense. Se proactivo: si el gasto supera
-la meta o la tendencia es negativa, alertalo aunque no te lo pregunten. Usa Markdown.
-Maximo 3 parrafos cortos. Si el balance es negativo, prioriza estrategias de reduccion.
+## Reglas de conducta
+1. Usá datos concretos del perfil financiero del usuario para responder. No inventes números.
+2. Si los gastos superan la meta o la tendencia es negativa, alertá al usuario aunque no lo pregunte.
+3. Si el historial mensual muestra un patrón (ej: todos los meses gasta de más), señálo.
+4. Si hay retos de ahorro activos, mencionálos cuando sea relevante y motivá al usuario a seguirlos.
+5. Cuando des consejos, sé específico y accionable ("podrías reducir X categoría" en vez de "gastá menos").
+6. Si el balance acumulado es negativo, priorizá estrategias de reducción de deuda.
+7. No respondas con más de 3-4 párrafos a menos que el usuario pida más detalle.
+8. Si el usuario te pide crear un reto, analizá si es realista según sus ingresos y gastos, y decí "Para crear este reto, necesito que vayas a la sección de Retos o me confirmes para generarlo".
+9. Si el usuario NO ha proporcionado datos de salario o meta mensual, sugerile amablemente que complete su perfil financiero.
 
-El usuario pregunta: "{body.mensaje}"'''
+## Historial de la conversación actual
+{chat_history}
+
+## Mensaje del usuario
+{body.mensaje}'''
 
         response = get_ai_client().models.generate_content(
             model='gemini-2.5-flash',

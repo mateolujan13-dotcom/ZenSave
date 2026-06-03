@@ -120,7 +120,8 @@ async function sendMessage(text) {
     if (input) input.disabled = true;
     if (btn) btn.disabled = true;
 
-    const res = await window.API.post('/asesor/consejo', { mensaje: text });
+    const historial = conversationHistory.slice(0, -1).map(m => ({ role: m.role, text: m.text }));
+    const res = await window.API.post('/asesor/consejo', { mensaje: text, historial });
     
     if (input) input.disabled = false;
     if (btn) btn.disabled = false;
